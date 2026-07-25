@@ -10,6 +10,7 @@ class Users::PostsController < Users::BaseController
     posts = PostsQuery.new(posts).for_user(@user)
 
     @pagy, @posts = pagy(posts)
+    set_liked_post_ids(@posts)
 
     respond_to do |format|
       format.html { render Views::Users::Posts::Index.new(user: @user, posts: @posts, pagy: @pagy) }
@@ -22,13 +23,14 @@ class Users::PostsController < Users::BaseController
     @feed_title = "Recent posts by #{@user}"
     set_meta_tags @user.to_meta_tags.merge(title: @feed_title)
 
-    stories = PostsQuery.new.recent
-    stories = PostsQuery.new(stories).for_user(@user)
+    posts = PostsQuery.new.recent
+    posts = PostsQuery.new(posts).for_user(@user)
 
-    @pagy, @stories = pagy(stories)
+    @pagy, @posts = pagy(posts)
+    set_liked_post_ids(@posts)
 
     respond_to do |format|
-      format.html { render Views::Users::Posts::Index.new(user: @user, posts: @stories, pagy: @pagy) }
+      format.html { render Views::Users::Posts::Index.new(user: @user, posts: @posts, pagy: @pagy) }
       format.atom { render 'posts/index' }
     end
   end

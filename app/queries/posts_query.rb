@@ -8,7 +8,6 @@ class PostsQuery
   end
 
   def with_includes
-    # relation.includes(:account, :url_meta, :tags, :taggings)
     relation.includes(:user, :url_meta, :tags, :taggings)
   end
 
@@ -17,11 +16,9 @@ class PostsQuery
   end
 
   def hot
-    # with_includes
-    #   .order(Arel.sql("ranking(likes_count, activitypub_objects.created_at::timestamp, 3) DESC"))
-    #   .where("activitypub_objects.created_at > ?", ActivityPubPost::HOT_DAYS_LIMIT.days.ago)
     with_includes
-      .order(likes_count: :desc)
+      .order(Arel.sql("ranking(posts.likes_count, posts.created_at, 3) DESC"))
+      .where("posts.created_at > ?", Post::HOT_DAYS_LIMIT.days.ago)
   end
 
   def recent

@@ -1,6 +1,5 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!, only: %i[new create edit update like unlike]
-  # before_action :set_account_liked_story_ids
 
   def index
     @page_title = "Hot stories"

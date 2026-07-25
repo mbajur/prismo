@@ -2,6 +2,8 @@ class Post < ApplicationRecord
   include Discard::Model
   include SearchCop
 
+  HOT_DAYS_LIMIT = 40
+
   Gutentag::ActiveRecord.call(self)
 
   belongs_to :user

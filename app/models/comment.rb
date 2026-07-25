@@ -2,6 +2,8 @@ class Comment < ApplicationRecord
   include Discard::Model
   include SearchCop
 
+  HOT_DAYS_LIMIT = 40
+
   has_closure_tree
 
   belongs_to :post, counter_cache: true

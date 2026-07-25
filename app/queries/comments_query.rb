@@ -20,9 +20,8 @@ class CommentsQuery
   end
 
   def hot
-    # with_includes.order(Arel.sql("ranking(likes_count, created_at::timestamp, 3) DESC"))
-    #              .where("created_at > ?", ActivityPubComment::HOT_DAYS_LIMIT.days.ago)
-    with_includes.order(likes_count: :desc)
+    with_includes.order(Arel.sql("ranking(comments.likes_count, comments.created_at, 3) DESC"))
+                 .where("comments.created_at > ?", Comment::HOT_DAYS_LIMIT.days.ago)
   end
 
   def recent
