@@ -2,7 +2,7 @@
 
 Federated link aggregation powered by ActivityPub.
 
-![Screenshot](screenshot.png)
+<img width="1223" height="983" alt="image" src="https://github.com/user-attachments/assets/c5b2318c-580d-4431-82dd-7a242724c07e" />
 
 ***
 
@@ -13,30 +13,6 @@ I will not be able to provide you any support when 1.0.0 is out as the changes
 will not be backward-compatible.**
 
 ***
-
-## Table Of Contents
-
-<!-- MarkdownTOC -->
-
-- [Getting started](#getting-started)
-    - [Prerequisites](#prerequisites)
-    - [Installing](#installing)
-        - [Setup / first run](#setup--first-run)
-        - [Development](#development)
-- [Running the tests](#running-the-tests)
-- [Deployment](#deployment)
-    - [Prerequisites](#prerequisites-1)
-    - [Setting up](#setting-up)
-    - [Getting the Prismo image](#getting-the-prismo-image)
-        - [Using a prebuilt image](#using-a-prebuilt-image)
-        - [Building your own image](#building-your-own-image)
-    - [Building the app](#building-the-app)
-- [Versioning](#versioning)
-- [Thanks](#thanks)
-- [License](#license)
-
-<!-- /MarkdownTOC -->
-
 
 ## Getting started
 
