@@ -1,0 +1,10 @@
+<turbo-stream action="replace" target="<%= dom_id(@comment) %>">
+  <template>
+    <%= render Views::Comments::Item.new(comment: @comment) %>
+  </template>
+</turbo-stream>
+
+<turbo-stream action="toast" target="ruby-ui-toaster" variant="success" title="All good!" description="Comment scheduled for removal.">
+  <template>
+  </template>
+</turbo-stream>

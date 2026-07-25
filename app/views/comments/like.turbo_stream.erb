@@ -1,0 +1,5 @@
+<turbo-stream action="replace" target="<%= dom_id(@comment, :meta_secondary) %>">
+  <template>
+    <%= render Views::Comments::ItemMetaSecondary.new(comment: @comment) %>
+  </template>
+</turbo-stream>

@@ -1,0 +1,165 @@
+class PostsController < ApplicationController
+  before_action :authenticate_user!, only: %i[new create edit update like unlike]
+  # before_action :set_account_liked_story_ids
+
+  def index
+    @page_title = "Hot stories"
+    @feed_title = @page_title
+
+    posts = PostsQuery.new.hot
+    # posts = PostsQuery.new(posts).without_silenced
+
+    @pagy, @posts = pagy(posts)
+    set_liked_post_ids(@posts)
+
+    respond_to do |format|
+      format.html { render Views::Posts::Index.new(posts: @posts, pagy: @pagy) }
+      format.atom { render :index }
+    end
+  end
+
+  def recent
+    @page_title = "Recent stories"
+    @feed_title = @page_title
+
+    posts = PostsQuery.new.recent
+    # posts = PostsQuery.new(posts).without_silenced
+
+    @pagy, @posts = pagy(posts)
+    set_liked_post_ids(@posts)
+
+    respond_to do |format|
+      format.html { render Views::Posts::Index.new(posts: @posts, pagy: @pagy) }
+      format.atom { render :index }
+    end
+  end
+
+  def show
+    # set_account_liked_comment_ids
+
+    @post = Post.find(params[:id])
+    set_liked_post_ids(Post.where(id: @post.id))
+
+    # @comments = @post.comments.includes(:user, :root_cached).hash_tree
+    @comments = @post.comments.includes(:user).hash_tree
+    set_liked_comment_ids(@post.comments)
+    # @comment = Comments::Create.new(
+    #   parent_id: @post.id
+    # )
+    @comment = Comment.new
+
+    respond_to do |format|
+      format.html { render Views::Posts::Show.new(post: @post, comments: @comments) }
+      # format.json do
+      #   render json: ActivityPub::StorySerializer.new(@story),
+      #          with_context: true,
+      #          content_type: 'application/activity+json'
+      # end
+    end
+  end
+
+  def new
+    @post = Posts::Create.new(*new_post_params)
+    authorize @post
+
+    render Views::Posts::New.new(post: @post)
+  end
+
+  def create
+    authorize Posts::Create
+
+    outcome = Posts::Create.run(
+      title: params.fetch(:post)[:title],
+      url: params.fetch(:post)[:url],
+      description: params.fetch(:post)[:description],
+      tag_list: params.fetch(:post)[:tag_list],
+      user: current_user
+    )
+
+    if outcome.valid?
+      path = outcome.result.decorate.path
+      redirect_to path, notice: "Post has been created"
+    else
+      @post = outcome
+      render Views::Posts::New.new(post: @post), status: :unprocessable_entity
+    end
+  end
+
+  def edit
+    post = find_post
+    authorize post
+
+    post = Posts::Update.new(
+      post: post,
+      url: post.url,
+      title: post.title,
+      tag_list: post.tag_names.join(", "),
+      description: post.description,
+    )
+
+    render Views::Posts::Edit.new(post: post)
+  end
+
+  def update
+    post = find_post
+    authorize post
+
+    outcome = Posts::Update.run(
+      post: post,
+      url: params.fetch(:post)[:url],
+      title: params.fetch(:post)[:title],
+      tag_list: params.fetch(:post)[:tag_list],
+      description: params.fetch(:post)[:description],
+      user: current_user
+    )
+
+    if outcome.valid?
+      path = outcome.result.decorate.path
+      redirect_to path, notice: "Post has been updated"
+    else
+      post = outcome
+      render Views::Posts::Edit.new(post: post)
+    end
+  end
+
+  def like
+    @post = find_post
+    Current.liked_post_ids = [ @post.id ]
+    authorize @post
+
+    @outcome = Posts::Like.run(post: @post, user: current_user)
+  end
+
+  def unlike
+    @post = find_post
+    Current.liked_post_ids = []
+    authorize @post
+
+    @outcome = Posts::Unlike.run(post: @post, user: current_user)
+    @post.reload
+  end
+
+  def scrap_url
+    cache_key = Digest::MD5.hexdigest params[:url]
+
+    scrapper = Rails.cache.fetch("link_thumbnailer/#{cache_key}", expires_in: 1.hour) do
+      LinkThumbnailer.generate(params[:url])
+    end
+
+    render json: scrapper
+  rescue LinkThumbnailer::BadUriFormat => _e
+    render json: { errors: [ "URL seems to be invalid" ] }, status: :bad_request
+  rescue LinkThumbnailer::HTTPError => _e
+    render json: { errors: [ "URL seems to be invalid" ] }, status: :bad_request
+  end
+
+  private
+
+  def new_post_params
+    params.permit(:url, :title, :description, :tag_list)
+  end
+
+  def find_post
+    Post.find(params[:id])
+  end
+end

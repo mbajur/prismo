@@ -1,0 +1,323 @@
+en:
+  generic:
+    changes_saved_msg: Changes have been saved.
+    not_authorized: You are not authorized to perform this action.
+
+  nothing_to_show: Nothing to show
+  text: Text
+  save_changes: Save changes
+
+  views:
+    comments:
+      show:
+        that_s_only_a: That's only a part of entire conversation.
+        see_all_the_comments: See all the comments
+        see_parent_comment: See parent comment
+    users:
+      header:
+        edit_your_profile: Edit your profile
+        karma: Karma
+        followers: Followers
+        following: Following
+        stories: Stories
+        comments: Comments
+    posts:
+      new:
+        title: Post a Story
+        submit_text: Submit a link or provide a description to start a discussion. Check the guidelines to make sure what you're posting is appropriate for the community.
+      edit:
+        title: Edit story
+      guidelines:
+        bookmarklet_description: "To be able to easily submit a page you're viewing, drag this bookmarklet to your bookmark bar:"
+        add_to: Add to %{site_title}
+      form:
+        fetch_title: Fetch title
+        url_help: Optional when providing description.
+        description_help: Optional when submitting a URL. Not for summarizing the post.
+
+  notifications:
+    comment_reply:
+      to_s: |
+        <a href="%{author_url}">%{author}</a>
+        wrote a <a href="%{notifable_url}">reply</a>
+        to comment on <a href="%{context_url}">%{context}</a> story.
+
+    story_reply:
+      to_s: |
+        <a href="%{author_url}">%{author}</a>
+        wrote a <a href="%{notifable_url}">reply</a>
+        to <a href="%{context_url}">%{context}</a> story.
+
+    new_follower:
+      to_s: |
+        <a href="%{author_url}">%{author}</a>
+        followed you.
+
+    new_flag:
+      to_s: |
+        <a href="%{author_url}">%{author}</a>
+        created a <a href="%{notifable_url}">flag</a> on <a href="%{context_url}">%{context}</a>.
+
+    index:
+      notifications: Notifications
+      all: All
+      unread: Unread
+      nothing_to_show: Nothing to show
+
+  search:
+    generic:
+      please_provide_query: Please write your search query in the input above
+      no_results_found: No results have been found. Maybe try changing search criteria?
+
+  simple_form:
+    "yes": 'Yes'
+    "no": 'No'
+    required:
+      text: 'required'
+      mark: '*'
+    error_notification:
+      default_message: "Please review the problems below:"
+    hints:
+      form_admin_settings:
+        site_title: Title of that instance. Also displayed in navbars and site meta.
+        stories_per_day: "How many stories user can add daily. Set to 0 to disable the limit. Default: 5"
+        story_likes_per_day: "How many daily likes user can cast on stories. Set to 0 to disable the limit. Default: 10"
+        comment_likes_per_day: "How many daily likes user can cast on comments. Set to 0 to disable the limit. Default: 10"
+        closed_registrations_message: "Optional. HTML allowed."
+        story_title_update_time_limit: 'For how long (in minutes) user is able to change his post title. Set to 0 to disable the limit. Default: 60'
+        edit_counter_grace_period_minutes: 'For how long (in minutes) post/comment edits should not be included in edits counter. Set to 0 to disable. Default: 3'
+      flag:
+        summary: Please briefly describe what's wrong with the resource you want to flag.
+
+  helpers:
+    submit:
+      comment:
+        create: Add comment
+        update: Save comment
+      story:
+        create: Add story
+        update: Save story
+      account:
+        create: Add account
+        update: Save account
+      activitypub_domain_block:
+        create: Block domain
+      flag:
+        create: Submit flag
+        update: Update flag
+
+  dashboards:
+    show:
+      you_re_not_following: You are not following any accounts nor tags yet.
+
+  stories:
+    show:
+      new_reply: New reply has been added.
+      load_it: Load it
+      no_comments: No comments yet
+      start_conversation: Click the button to start a conversation.
+      add_first_comment: Add first comment
+    guidelines:
+      bookmarklet_description: "To be able to easily submit a page you're viewing, drag this bookmarklet to your bookmark bar:"
+      add_to: Add to %{site_title}
+  settings:
+    profiles:
+      show:
+        close: Close
+        delete_account: Delete Account
+        delete_account_title: Delete Account
+        delete_account_warning: Warning! Deleting your account is irreversible. Please enter your password to confirm account deletion.
+  admin:
+    accounts:
+      index:
+        accounts: Accounts
+        username: Username
+        domain: Domain
+        network: Network
+        public: Public
+        edit: Edit
+      show:
+        admin: Admin
+        user: User
+        suspended: Suspended
+        silenced: Silenced
+        username: Username
+        domain: Domain
+        display_name: Display name
+        permissions: Permissions
+        e_mail: E-mail
+        last_ip: Last IP
+        last_activity: Last activity
+        followers: Followers
+        following: Following
+        posts: Posts
+        comments: Comments
+        silence: Silence
+        unsilence: Unsilence
+        suspend: Suspend
+    domain_blocks:
+      form:
+        cancel: Cancel
+      new:
+        block_domain: Block domain
+      index:
+        blocked_domains: Blocked domains
+        domain: Domain
+        severity: Severity
+        blocked_at: Blocked at
+        delete: Delete
+        add_new: "Add new +"
+    settings:
+      edit:
+        settings: Settings
+        limits: Limits
+        save_changes: Save changes
+  accounts:
+    destroy:
+      success: Account Deleted
+    errors:
+      invalid_password: is invalid
+    comments:
+      index:
+        hot: Hot
+        recent: Recent
+    stories:
+      index:
+        hot: Hot
+        recent: Recent
+  comments:
+    form:
+      you_can_t_post: You can't post comments because your account has been silenced.
+      write_your_comment: "Write your comment here..."
+      need_to_be_signed_in_html: You need to be <a href="%{href}">signed-in</a> to post comments.
+    index:
+      hot: Hot
+      recent: Recent
+      cancel: Cancel
+    list:
+      no_comments_to_show: No comments to show
+      maybe_try_changing_search: Maybe try changing search criteria?
+    comment:
+      op: OP
+      op_title: Original Poster
+      comment_replies: "%{comment} replies"
+      parent: parent
+      delete: delete
+      on_story: "on: %{link}"
+  dashboard:
+    followed_accounts:
+      show:
+        hot: Hot
+        recent: Recent
+        nothing_to_show: Nothing to show
+        you_re_not_following: You're not following any accounts yet.
+        accounts_you_follow_have: Accounts you follow have not published anything
+          yet.
+  kaminari:
+    mini_box:
+      prev_page:
+        prev: "< prev"
+      next_page:
+        next: next >
+  layouts:
+    settings:
+      edit_profile: Edit profile
+      site_settings: Site settings
+      accounts: Accounts
+      blocked_domains: Blocked domains
+      sidekiq: Sidekiq
+  shared:
+    markdown_editor:
+      nothing_to_show: Nothing to show
+      markdown_supported: Markdown supported
+      toggle_preview: Toggle preview
+    navbar:
+      add_story: "+ Add story"
+      join_us: Join us
+    footer:
+      powered_by: powered by
+  static:
+    design:
+      dropdowns: Dropdowns
+      my_profile: My profile
+      settings: Settings
+      log_out: Log-out
+      click_me: Click me!
+      popovers: Popovers
+      hover_me: Hover me
+      popover_content_goes_here: Popover content goes here
+      buttons: Buttons
+      filled: Filled
+      button: Button
+      outlined: Outlined
+  tags:
+    stories:
+      index:
+        hot: Hot
+        recent: Recent
+  devise:
+    shared:
+      links:
+        log_in: Log in
+        sign_up: Sign up
+        forgot_your_password: Forgot your password?
+        didn_t_receive_confirmation: Didn't receive confirmation instructions?
+        didn_t_receive_unlock: Didn't receive unlock instructions?
+    passwords:
+      edit:
+        minimum_password_length: "%{minimum_password_length} characters minimum"
+        new_password: New password
+        change_my_password: Change my password
+      new:
+        send_me_reset_password: Send me reset password instructions
+    registrations:
+      new:
+        sign_up: Sign up
+        registration_disabled: Registration disabled
+        registration_is_currently_disabled: Registration is currently disabled. Please
+          come back later.
+      edit:
+        edit: Edit
+        currently_waiting_confirmation_for: 'Currently waiting confirmation for:'
+        leave_blank_if: "(leave blank if you don't want to change it)"
+        characters_minimum: characters minimum
+        we_need_your: "(we need your current password to confirm your changes)"
+        cancel_my_account: Cancel my account
+        unhappy: Unhappy?
+        are_you_sure: Are you sure?
+        back: Back
+        edit_resource_name: Edit %{resource_name} %{resource}'
+        minimum_password_length: "%{minimum_password_length} characters minimum"
+    unlocks:
+      new:
+        resend_unlock_instructions: Resend unlock instructions
+    mailer:
+      confirmation_instructions:
+        welcome_email: Welcome %{email}!
+        you_can_confirm_your: 'You can confirm your account email through the link
+          below:'
+        confirm_my_account: Confirm my account
+      email_changed:
+        hello_email: Hello %{email}!
+        being_changed: We're contacting you to notify you that your email is being
+          changed to %{resource}.
+        been_changed: We're contacting you to notify you that your email has been
+          changed to %{resource}.
+      password_change:
+        hello_resource: Hello %{resource}!
+        we_re_contacting_you: We're contacting you to notify you that your password
+          has been changed.
+      reset_password_instructions:
+        hello_resource: Hello %{resource}!
+        someone_has_requested_a: Someone has requested a link to change your password.
+          You can do this through the link below.
+        change_my_password: Change my password
+        if_you_didn_t: If you didn't request this, please ignore this email.
+        your_password_won_t: Your password won't change until you access the link
+          above and create a new one.
+      unlock_instructions:
+        hello_resource: Hello %{resource}!
+        your_account_has_been: Your account has been locked due to an excessive number
+          of unsuccessful sign in attempts.
+        click_the_link_below: 'Click the link below to unlock your account:'
+        unlock_my_account: Unlock my account

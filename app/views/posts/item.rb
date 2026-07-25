@@ -1,0 +1,85 @@
+module Views
+  module Posts
+    class Item < Views::Base
+      include Phlex::Rails::Helpers::LinkTo
+      include Phlex::Rails::Helpers::Pluralize
+      include Phlex::Rails::Helpers::DOMID
+
+      def initialize(post:)
+        @post = post
+        @user = post.user.decorate
+        @tags = @post.tags.to_a
+      end
+
+      def view_template(&)
+        div(class: "flex gap-4 pb-4", id: dom_id(@post)) do
+          div(class: "w-6 text-center font-bold text-sm") do
+            render Views::Posts::LikeBtn.new(post: @post)
+          end
+
+          div(class: "w-30") do
+            a(href: post_path(@post), class: "bg-muted aspect-square block rounded-sm relative") do
+              if @post.article?
+                render Components::Icons::Text.new(class: "w-4 h-4 text-muted-foreground/30 m-auto absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 z-2")
+              else
+                render Components::Icons::Link.new(class: "w-4 h-4 text-muted-foreground/30 m-auto absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 z-2")
+              end
+
+              if @post.thumb_data?
+                img(src: @post.thumb_url(:size_200), class: "w-full rounded-xs z-10 relative", loading: :lazy)
+              end
+            end
+          end
+
+          div(class: "flex flex-col flex-1 gap-1") do
+            h3(class: "font-bold") do
+              if @post.url.present?
+                link_to @post.title, @post.url, target: "_blank", rel: "noopener noreferrer"
+              else
+                link_to @post.title, post_path(@post)
+              end
+            end
+
+            ul(class: "flex items-center gap-2 text-sm text-gray-500") do
+              li { link_to(@user, @user.path) }
+              li { @post.url_domain } if @post.url_domain.present?
+
+              primary_tags.each do |tag|
+                li { link_to "##{tag.name}", tag_posts_path(tag.name) }
+              end
+
+              li { "+#{secondary_tags.count} more" } if secondary_tags.any?
+            end
+
+            div(class: "text-sm") do
+              @post.decorate.excerpt
+            end
+
+            ul(class: "flex items-center gap-2 text-sm text-gray-500") do
+              li { pluralize(@post.comments_count, "comment") }
+              li do
+                link_to(@post.decorate.path) do
+                  span { "posted " }
+                  span { timeago(@post.created_at) }
+                  span { " ago" }
+                end
+              end
+
+              li { link_to("edit", edit_post_path(@post)) } if policy(@post).edit?
+            end
+          end
+        end
+      end
+
+      private
+
+      def primary_tags
+        @tags.first(2)
+      end
+
+      def secondary_tags
+        @tags.drop(2)
+      end
+    end
+  end
+end
