@@ -11,7 +11,7 @@ module Views
         end
 
         def view_template(&)
-          render Components::Page.new() do
+          render Components::Page.new(content_shifted: true) do
             render Components::Box.new() do
               render Components::BoxHeader.new() do
                 render Components::BoxNav.new() do |nav|

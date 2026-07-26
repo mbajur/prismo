@@ -37,7 +37,7 @@ module Views
                       div(class: "col-span-1") do
                         if @user.avatar_data
                           FormField() do
-                            image_tag @user.avatar_url(:size_400), size: '100x100', class: "rounded-full"
+                            image_tag @user.avatar_url(:size_400), size: "100x100", class: "rounded-full"
 
                             div(class: "flex items-center space-x-3") do
                               f.check_box :remove_avatar
