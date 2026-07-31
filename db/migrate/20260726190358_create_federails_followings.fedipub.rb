@@ -9,7 +9,7 @@ class CreateFederailsFollowings < ActiveRecord::Migration[7.0]
 
       t.timestamps
 
-      t.index [:actor_id, :target_actor_id], unique: true
+      t.index [ :actor_id, :target_actor_id ], unique: true
     end
   end
 end

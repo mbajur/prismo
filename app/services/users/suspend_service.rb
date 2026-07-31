@@ -29,8 +29,8 @@ module Users
       user.silenced         = false
       user.suspended        = true
       # user.locked           = false
-      user.display_name     = ''
-      user.bio              = ''
+      user.display_name     = ""
+      user.bio              = ""
       user.posts_count      = 0
       user.comments_count   = 0
       user.followers_count  = 0

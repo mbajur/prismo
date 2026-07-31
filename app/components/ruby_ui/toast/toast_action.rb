@@ -15,7 +15,7 @@ module RubyUI
     private
 
     def default_attrs
-      data = {slot: "action"}
+      data = { slot: "action" }
       data[:action] = @on if @on
       {
         type: "button",

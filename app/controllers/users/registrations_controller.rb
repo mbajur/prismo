@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
-  before_action :check_enabled_registrations, only: [:create, :new]
-  before_action :configure_sign_up_params, only: [:create]
+  before_action :check_enabled_registrations, only: [ :create, :new ]
+  before_action :configure_sign_up_params, only: [ :create ]
   # before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
@@ -42,12 +42,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   protected
 
   def check_enabled_registrations
-    redirect_to :root, notice: 'Registration is currently disabled' if !Setting.open_registrations
+    redirect_to :root, notice: "Registration is currently disabled" if !Setting.open_registrations
   end
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:username])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [ :username ])
   end
 
   # If you have extra params to permit, append them to the sanitizer.

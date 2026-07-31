@@ -8,7 +8,7 @@ class UrlMetaThumbUploader < Shrine
   process(:cache) do |io, _|
     pipeline = ImageProcessing::Vips.source(io)
                                     .loader(page: 1)
-                                    .convert('jpg')
+                                    .convert("jpg")
                                     .saver(background: 255, quality: 100)
 
     pipeline.resize_to_limit!(400, 400)

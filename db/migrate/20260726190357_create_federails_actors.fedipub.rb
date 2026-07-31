@@ -17,7 +17,7 @@ class CreateFederailsActors < ActiveRecord::Migration[7.0]
 
       t.timestamps
       t.index :federated_url, unique: true
-      t.index [:entity_type, :entity_id], name: 'index_federails_actors_on_entity', unique: true
+      t.index [ :entity_type, :entity_id ], name: 'index_federails_actors_on_entity', unique: true
     end
   end
 end
