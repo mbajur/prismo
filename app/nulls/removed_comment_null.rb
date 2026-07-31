@@ -7,6 +7,10 @@ class RemovedCommentNull
     @comment = comment
   end
 
+  def fedipub_actor
+    Fedipub::RemovedActorNull.new(@comment)
+  end
+
   def kept?
     false
   end

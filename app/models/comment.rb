@@ -1,6 +1,7 @@
 class Comment < ApplicationRecord
   include Discard::Model
   include SearchCop
+  include Fedipub::DataEntity
 
   HOT_DAYS_LIMIT = 40
 
@@ -16,6 +17,49 @@ class Comment < ApplicationRecord
     attributes :body
   end
 
+  acts_as_fedipub_data handles: [ "Note" ],
+                       soft_deleted_method: :discarded?,
+                       soft_delete_date_method: :discarded_at,
+                       actor_entity_method: :user,
+                       route_path_segment: :comments
+
+  on_fedipub_delete_requested :discard
+
+  # Handle only notes that are replies to something. Either to post or another
+  # note
+  def self.handle_federated_object?(hash)
+    hash["inReplyTo"].present?
+  end
+
+  def self.from_activitypub_object(hash)
+    raise "No parent defined in object" if hash["inReplyTo"].blank?
+
+    attrs = Fedipub::Utils::Object.timestamp_attributes(hash)
+                                  .merge federated_url: hash["id"],
+                                         body:         hash["content"]
+
+    parent_or_post = Fedipub::Utils::Object.find_or_create! hash["inReplyTo"]
+
+    if parent_or_post.is_a? Post
+      attrs[:post] = parent_or_post
+    elsif parent_or_post.is_a? Comment
+      attrs[:post] = parent_or_post.post
+      attrs[:parent] = parent_or_post
+    end
+
+    attrs
+  end
+
+  def to_activitypub_object
+    parent_or_post = parent || post
+
+    Fedipub::DataTransformer::Note.to_federation self,
+                                                 content: body,
+                                                 custom: {
+                                                   "inReplyTo" => parent_or_post.federated_url
+                                                 }
+  end
+
   def cache_depth
     update_attribute(:depth_cached, depth)
   end
@@ -24,9 +68,28 @@ class Comment < ApplicationRecord
     update_attribute(:body_html, BodyParser.new(body).call)
   end
 
+  def cache_likes
+    update(
+      likes_count: Fedipub::Activity.where(action: "Like", entity: self, undone_at: nil).count
+    )
+  end
+
   before_discard do
     self.user = nil
     self.body = nil
     self.body_html = nil
+  end
+
+  after_discard do
+    create_fedipub_activity "Delete" if local_fedipub_entity?
+  end
+
+  # @todo move that to Fedipub
+  def like!(actor:)
+    if local_fedipub_entity?
+      super
+    else
+      Fedipub::Activity.create!(action: "Like", actor: actor, entity: self)
+    end
   end
 end

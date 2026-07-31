@@ -6,8 +6,9 @@ module Views
       include Phlex::Rails::Helpers::DOMID
 
       def initialize(post:)
-        @post = post
-        @user = post.user.decorate
+        @post = post.decorate
+        @user = post.fedipub_actor.decorate
+        @group = post.group.decorate
         @tags = @post.tags.to_a
       end
 
@@ -25,9 +26,8 @@ module Views
                 render Components::Icons::Link.new(class: "w-4 h-4 text-muted-foreground/30 m-auto absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 z-2")
               end
 
-              if @post.thumb_data?
-                img(src: @post.thumb_url(:size_200), class: "w-full rounded-xs z-10 relative", loading: :lazy)
-              end
+
+              img(src: @post.thumb_url, class: "w-full rounded-xs z-10 relative", loading: :lazy) if @post.thumb_url
             end
           end
 
@@ -40,8 +40,15 @@ module Views
               end
             end
 
-            ul(class: "flex items-center gap-2 text-sm text-gray-500") do
-              li { link_to(@user, @user.path) }
+            ul(class: "flex items-center gap-3 text-sm text-gray-500") do
+              li do
+                link_to(@user, @user.path)
+
+                if !@group.supergroup?
+                  span { " ▸ " }
+                  link_to(@group, @group.path)
+                end
+              end
               li { @post.url_domain } if @post.url_domain.present?
 
               primary_tags.each do |tag|
@@ -55,7 +62,7 @@ module Views
               @post.decorate.excerpt
             end
 
-            ul(class: "flex items-center gap-2 text-sm text-gray-500") do
+            ul(class: "flex items-center gap-3 text-sm text-gray-500") do
               li { pluralize(@post.comments_count, "comment") }
               li do
                 link_to(@post.decorate.path) do

@@ -1,0 +1,29 @@
+---
+defaults: &defaults
+  app_name: Prismo
+  app_version: 0.0.1
+  force_ssl: false
+  # site_host: http://prismo.localhost
+  # site_host: "https://<%= ENV['APP_HOST'] %>"
+  site_host: "https://prismo-dev.mbajur.com"
+  # site_port: 3000
+  enable_discovery: true
+  open_registrations: false
+  app_layout: "layouts/application"
+  server_routes_path: federation
+  client_routes_path: app
+  job_queue: default
+  #remote_entities_cache_duration: 86400 # 1 day in seconds
+  #base_client_controller: ::ActionController::Base
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+  site_port: null
+
+production:
+  <<: *defaults
+  force_ssl: true
+  site_port: 443

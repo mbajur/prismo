@@ -7,7 +7,7 @@ Rails.application.configure do
   config.enable_reloading = true
 
   # Do not eager load code on boot.
-  config.eager_load = false
+  config.eager_load = true # needed for Fedipub to load all the handlers
 
   # Show full error reports.
   config.consider_all_requests_local = true
@@ -38,7 +38,8 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   # Set localhost to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
+  config.action_controller.default_url_options = { host: ENV["APP_HOST"], port: ENV["APP_PORT"] }
+  config.action_mailer.default_url_options = config.action_controller.default_url_options
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log

@@ -34,26 +34,19 @@ class PostsController < ApplicationController
   end
 
   def show
-    # set_account_liked_comment_ids
+    @post = Post.find(params[:id]).decorate
 
-    @post = Post.find(params[:id])
+    set_meta_tags @post
     set_liked_post_ids(Post.where(id: @post.id))
 
     # @comments = @post.comments.includes(:user, :root_cached).hash_tree
     @comments = @post.comments.includes(:user).hash_tree
     set_liked_comment_ids(@post.comments)
-    # @comment = Comments::Create.new(
-    #   parent_id: @post.id
-    # )
     @comment = Comment.new
 
     respond_to do |format|
       format.html { render Views::Posts::Show.new(post: @post, comments: @comments) }
-      # format.json do
-      #   render json: ActivityPub::StorySerializer.new(@story),
-      #          with_context: true,
-      #          content_type: 'application/activity+json'
-      # end
+      format.activitypub { render json: @post.to_activitypub_object }
     end
   end
 
