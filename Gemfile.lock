@@ -1,5 +1,5 @@
 GIT
-  remote: git@gitlab.com:fedipub/fedipub.git
+  remote: https://gitlab.com/fedipub/fedipub.git
   revision: b84ff11dfa1202e2a31f34cd8450e23689bb0d6f
   branch: main
   specs:
