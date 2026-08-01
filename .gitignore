@@ -35,4 +35,4 @@
 /config/*.key
 
 .env.local
-./kamal/secrets-common
+.kamal/secrets-common
