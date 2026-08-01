@@ -36,7 +36,7 @@ class User < ApplicationRecord
     data = { summary: decorate.bio_html }
 
     if avatar_data.present?
-      data["image"] = {
+      data["icon"] = {
         type: "Image",
         "url" => avatar_url(host: "https://#{ENV['HOST']}"),
         "mediaType" => avatar.mime_type
