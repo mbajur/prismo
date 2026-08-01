@@ -5,6 +5,7 @@ require "fedipub/data_transformer/note"
 Fedipub.config_from "fedipub"
 
 Fedipub.configure do |config|
+  config.site_host = ENV["HOST"]
   config.open_registrations = -> { Setting.open_registrations }
 end
 

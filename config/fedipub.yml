@@ -5,7 +5,7 @@ defaults: &defaults
   force_ssl: false
   # site_host: http://prismo.localhost
   # site_host: "https://<%= ENV['APP_HOST'] %>"
-  site_host: "https://prismo-dev.mbajur.com"
+  # site_host: "https://prismo-dev.mbajur.com"
   # site_port: 3000
   enable_discovery: true
   open_registrations: false
