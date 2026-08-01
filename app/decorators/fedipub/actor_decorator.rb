@@ -8,7 +8,7 @@ module Fedipub
 
     def path
       if object.local?
-        h.user_path(object)
+        h.user_path(object.username)
       else
         object.federated_url
       end
