@@ -76,11 +76,29 @@ class Post < ApplicationRecord
     if article?
       Fedipub::DataTransformer::Article.to_federation self,
                                                       name:    title,
-                                                      content: description_cached
+                                                      content: description_cached,
+                                                      custom: {
+                                                        "tag" => tags.map do |tag|
+                                                          {
+                                                            "type" => "Hashtag",
+                                                            "name" => "##{tag.name}",
+                                                            "href" => Rails.application.routes.url_helpers.tag_posts_url(tag)
+                                                          }
+                                                        end
+                                                      }
     else
       Fedipub::DataTransformer::Page.to_federation self,
                                                    name:    title,
-                                                   content: description_cached
+                                                   content: description_cached,
+                                                   custom: {
+                                                     "tag" => tags.map do |tag|
+                                                       {
+                                                         "type" => "Hashtag",
+                                                         "name" => "##{tag.name}",
+                                                         "href" => Rails.application.routes.url_helpers.tag_posts_url(tag)
+                                                       }
+                                                     end
+                                                   }
     end
   end
 
