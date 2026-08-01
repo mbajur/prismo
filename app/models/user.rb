@@ -33,7 +33,17 @@ class User < ApplicationRecord
                         profile_url_method: :user_url
 
   def to_activitypub_object
-    { summary: decorate.bio_html }
+    data = { summary: decorate.bio_html }
+
+    if avatar_data.present?
+      data["image"] = {
+        type: "Image",
+        "url" => avatar_url(host: "https://#{ENV['HOST']}"),
+        "mediaType" => avatar.mime_type
+      }
+    end
+
+    data
   end
 
   def to_param
