@@ -10,8 +10,8 @@ end
 
 Rails.application.config.after_initialize do
   Fedipub::Utils::JsonRequest::BASE_HEADERS = {
-    "Content-Type" => "application/ld+json",
-    "Accept"       => "application/ld+json"
+    "Content-Type" => 'application/ld+json;profile="https://www.w3.org/ns/activitystreams"',
+    "Accept"       => 'application/ld+json;profile="https://www.w3.org/ns/activitystreams"'
   }
 
   Fediverse::Webfinger.class_eval do

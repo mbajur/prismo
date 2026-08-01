@@ -110,4 +110,4 @@ gem "shrine", "~> 3.6"
 
 gem "store_model", "~> 4.6"
 
-gem "fedipub"
+gem "fedipub", git: "git@gitlab.com:fedipub/fedipub.git", branch: "main"
