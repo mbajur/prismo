@@ -39,6 +39,6 @@ module Prismo
     # Don't generate system test files.
     config.generators.system_tests = nil
 
-    config.hosts << "prismo-dev.mbajur.com"
+    config.hosts << ENV["HOST"]
   end
 end
