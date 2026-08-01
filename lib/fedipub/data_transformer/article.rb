@@ -24,6 +24,7 @@ module Fedipub
         # Merge in standard Article fields
         custom.merge "@context"     => context,
                      "id"           => entity.federated_url,
+                     "url"          => Rails.application.routes.url_helpers.post_url(entity),
                      "type"         => "Article",
                      "name"         => name,
                      "content"      => content,
