@@ -26,7 +26,7 @@ module Posts
     private
 
     def after_post_save_hook(post)
-      # account.touch(:last_active_at)
+      user.touch(:last_active_at)
       post.cache_description
 
       Posts::Like.run!(post: post, user: user)
