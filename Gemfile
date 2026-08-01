@@ -111,3 +111,5 @@ gem "shrine", "~> 3.6"
 gem "store_model", "~> 4.6"
 
 gem "fedipub", git: "https://gitlab.com/fedipub/fedipub.git", branch: "main"
+
+gem "rorvswild"
