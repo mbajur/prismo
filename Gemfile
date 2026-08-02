@@ -41,6 +41,8 @@ gem "thruster", require: false
 gem "image_processing", "~> 1.2"
 
 group :development, :test do
+  gem "dotenv"
+
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
 
@@ -57,6 +59,7 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+  gem "httplog", require: "httplog"
 end
 
 gem "devise", "~> 5.0"
@@ -87,8 +90,6 @@ gem "meta-tags", "~> 2.23"
 
 gem "search_cop", "~> 1.5"
 
-# gem "rails-settings-cached", github: "huacnlee/rails-settings-cached", tag: "v0.7.3"
-# gem "rails-settings-cached", github: "huacnlee/rails-settings-cached"
 gem "rails-settings-cached"
 
 gem "validate_url", "~> 1.0"
@@ -108,3 +109,7 @@ gem "redcarpet", "~> 3.6"
 gem "shrine", "~> 3.6"
 
 gem "store_model", "~> 4.6"
+
+gem "fedipub", git: "https://gitlab.com/fedipub/fedipub.git", branch: "main"
+
+gem "rorvswild"

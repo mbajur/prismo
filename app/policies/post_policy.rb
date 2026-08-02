@@ -22,7 +22,7 @@ class PostPolicy < ApplicationPolicy
     return true if user.admin?
 
     # Then check if limit is not disabled
-    limit = Setting.story_title_update_time_limit.to_i
+    limit = Setting.post_title_update_time_limit.to_i
     return true if limit.zero? && edit?
 
     diff = ((Time.current - record.created_at) / 1.minute).to_i

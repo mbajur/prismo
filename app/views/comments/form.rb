@@ -26,7 +26,7 @@ module Views
       private
 
       def submit_text
-        @comment.persisted? ? t('helpers.submit.comment.update') : t('helpers.submit.comment.create')
+        @comment.persisted? ? t("helpers.submit.comment.update") : t("helpers.submit.comment.create")
       end
 
       def placeholder

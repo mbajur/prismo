@@ -9,7 +9,6 @@ module Views
         end
 
         def view_template
-
         end
       end
     end

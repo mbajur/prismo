@@ -15,7 +15,7 @@ class Settings::PreferencesController < ApplicationController
     )
 
     if settings.valid?
-      redirect_to settings_preferences_path, notice: 'Preferences updated'
+      redirect_to settings_preferences_path, notice: "Preferences updated"
     else
       render Views::Settings::Preferences::Show.new(settings: settings), status: :unprocessable_entity
     end

@@ -42,7 +42,7 @@ module Admin
         end
       end
 
-      flash[:notice] = I18n.t('generic.changes_saved_msg')
+      flash[:notice] = I18n.t("generic.changes_saved_msg")
       redirect_to edit_admin_settings_path
     end
 
@@ -54,7 +54,7 @@ module Admin
 
     def value_for_update(key, value)
       if BOOLEAN_SETTINGS.include?(key)
-        value == '1'
+        value == "1"
       else
         value
       end

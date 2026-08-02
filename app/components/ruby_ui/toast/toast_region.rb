@@ -79,7 +79,7 @@ module RubyUI
     end
 
     def slot_template(target_name, &)
-      template(data: {ruby_ui__toaster_target: target_name}, &)
+      template(data: { ruby_ui__toaster_target: target_name }, &)
     end
 
     def default_attrs

@@ -8,7 +8,7 @@ module Redcarpet
       end
 
       def header(text, header_level)
-        '<p>' + '#' * header_level + text + '</p>'
+        "<p>" + "#" * header_level + text + "</p>"
       end
 
       def block_html(raw_html)

@@ -34,7 +34,7 @@ class BodyParser
 
   def parse_mentions!
     @body = body.gsub(User::MENTION_RE) do |x|
-      username, domain = x.split('@').reject(&:blank?)
+      username, domain = x.split("@").reject(&:blank?)
 
       if domain.present?
         "<a href=\"https://#{domain}/@#{username}\">@#{username}</a>"

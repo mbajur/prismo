@@ -9,19 +9,27 @@ class CommentPolicy < ApplicationPolicy
     user.present? && !user.silenced? && !user.suspended?
   end
 
+  def edit?
+    user.present? && record.local_fedipub_entity? && (user.admin? || user == record.user)
+  end
+
   def update?
-    user.present? && (user.admin? || user == record.user)
+    edit?
   end
 
   def comment?
     user.present? && !user.silenced? && !user.suspended?
   end
 
-  def toggle_like?
+  def like?
     user.present? && !user.silenced? && !user.suspended?
   end
 
+  def unlike?
+    like?
+  end
+
   def destroy?
-    user.present? && (user.admin? || user == record.user)
+    user.present? && record.local_fedipub_entity? && (user.admin? || user == record.user)
   end
 end

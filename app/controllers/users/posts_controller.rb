@@ -14,7 +14,7 @@ class Users::PostsController < Users::BaseController
 
     respond_to do |format|
       format.html { render Views::Users::Posts::Index.new(user: @user, posts: @posts, pagy: @pagy) }
-      format.atom { render 'posts/index' }
+      format.atom { render "posts/index" }
     end
   end
 
@@ -31,7 +31,7 @@ class Users::PostsController < Users::BaseController
 
     respond_to do |format|
       format.html { render Views::Users::Posts::Index.new(user: @user, posts: @posts, pagy: @pagy) }
-      format.atom { render 'posts/index' }
+      format.atom { render "posts/index" }
     end
   end
 end

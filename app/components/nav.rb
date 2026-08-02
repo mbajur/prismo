@@ -21,7 +21,7 @@ module Components
             a(href: new_post_path, class: "text-sm font-medium text-white/60 hover:text-white") { "+ Add" }
 
             if user_signed_in?
-              DropdownMenu(options: { placement: 'bottom-end' }) do
+              DropdownMenu(options: { placement: "bottom-end" }) do
                 DropdownMenuTrigger(class: "flex items-center") do
                   image_tag current_user.avatar_url, class: "h-8 w-8 rounded-full"
                 end

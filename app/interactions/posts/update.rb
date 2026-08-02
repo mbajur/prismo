@@ -12,7 +12,7 @@ module Posts
       post.title = title if title
       post.tag_names = tags if tag_list
       post.description = description if description
-      post.url = url if url.present? && can_update_url
+      post.url = url if url.present? && can_update_url?
 
       post.modified_at = Time.current
       post.modified_count += 1 if edit_grace_period_passed?
@@ -42,7 +42,7 @@ module Posts
     def title_update_time_limit
       return unless title_changed?
 
-      limit = Setting.story_title_update_time_limit
+      limit = Setting.post_title_update_time_limit
       errors.add(:title, "can't be edited after #{limit} minutes") unless can_update_title?
     end
 

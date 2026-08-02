@@ -9,8 +9,12 @@ module Views
       end
 
       def view_template(&)
-        # span(class: "#{'font-bold text-amber-600' if upvoted?}") { pluralize(@comment.likes_count, "like") }
-        button_to(button_url, class: "cursor-pointer #{'font-bold text-amber-600' if upvoted?}", method: :post, form: { class: "inline" }) { pluralize(@comment.likes_count, "like") }
+        button_to(button_url, class: "cursor-pointer #{'font-bold text-amber-600' if upvoted?}",
+                              method: :post,
+                              form: { class: "inline" }
+        ) do
+          pluralize(@comment.likes_count, "like")
+        end
       end
 
       private

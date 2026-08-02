@@ -25,7 +25,7 @@ module RubyUI
           "z-50 hidden group-[.is-absolute]/dropdown-menu:absolute",
           "group-[.is-fixed]/dropdown-menu:fixed"
         ],
-        data: {ruby_ui__dropdown_menu_target: "content"},
+        data: { ruby_ui__dropdown_menu_target: "content" },
         style: {
           width: "max-content",
           top: "0",

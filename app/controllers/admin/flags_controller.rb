@@ -22,7 +22,7 @@ module Admin
 
       Flags::Resolve.run(flag: @flag.object)
 
-      redirect_to admin_flag_path(@flag), notice: 'Flag marked as resolved'
+      redirect_to admin_flag_path(@flag), notice: "Flag marked as resolved"
     end
 
     def unresolve
@@ -31,7 +31,7 @@ module Admin
 
       Flags::Unresolve.run(flag: @flag.object)
 
-      redirect_to admin_flag_path(@flag), notice: 'Flag marked as unresolved'
+      redirect_to admin_flag_path(@flag), notice: "Flag marked as unresolved"
     end
 
     private
