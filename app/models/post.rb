@@ -22,7 +22,6 @@ class Post < ApplicationRecord
     attributes :title, :description
   end
 
-  # @todo handle both Page and Article
   acts_as_fedipub_data handles: [ "Page", "Article" ],
                        soft_deleted_method: :discarded?,
                        soft_delete_date_method: :discarded_at,
