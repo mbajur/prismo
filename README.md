@@ -1,4 +1,4 @@
-# ▵ Prismo  [![pipeline status](https://gitlab.com/prismosuite/prismo/badges/master/pipeline.svg)](https://gitlab.com/prismosuite/prismo/commits/master) [![coverage report](https://gitlab.com/prismosuite/prismo/badges/master/coverage.svg)](https://gitlab.com/prismosuite/prismo/commits/master)
+# ▵ Prismo  [![codecov](https://codecov.io/gh/mbajur/prismo/graph/badge.svg?token=5DaxWR0utn)](https://codecov.io/gh/mbajur/prismo)
 
 Federated link aggregation powered by ActivityPub.
 
