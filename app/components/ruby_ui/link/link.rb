@@ -107,7 +107,7 @@ module RubyUI
     end
 
     def default_attrs
-      {type: "button", class: default_classes}
+      { type: "button", class: default_classes }
     end
   end
 end

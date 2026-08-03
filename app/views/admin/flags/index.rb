@@ -17,10 +17,10 @@ module Views
                 Table do
                   TableHeader do
                     TableRow do
-                      TableHead { t('.author') }
-                      TableHead { t('.object') }
-                      TableHead { t('.resolved') }
-                      TableHead { t('.when') }
+                      TableHead { t(".author") }
+                      TableHead { t(".object") }
+                      TableHead { t(".resolved") }
+                      TableHead { t(".when") }
                       TableHead
                     end
                   end
@@ -36,10 +36,10 @@ module Views
                         TableCell do
                           link_to flaggable.to_flag_title.truncate(20), flag.flaggable.decorate.path
                         end
-                        TableCell { flag.action_taken? ? t('.yes') : t('.no') }
+                        TableCell { flag.action_taken? ? t(".yes") : t(".no") }
                         TableCell { timeago(flag.created_at) }
                         TableCell do
-                          link_to t('.more'), admin_flag_path(flag)
+                          link_to t(".more"), admin_flag_path(flag)
                         end
                       end
                     end

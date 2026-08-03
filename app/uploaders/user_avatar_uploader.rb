@@ -7,7 +7,7 @@ class UserAvatarUploader < Shrine
   Attacher.derivatives do |original|
     pipeline = ImageProcessing::Vips.source(original)
                                     .loader(page: 1)
-                                    .convert('jpg')
+                                    .convert("jpg")
                                     .saver(background: 255, quality: 100)
 
     {

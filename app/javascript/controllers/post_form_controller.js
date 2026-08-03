@@ -40,14 +40,18 @@ export default class extends Controller {
     this.tagify = new Tagify(this.tagsPhantomInputTarget, {
       delimiters: ', ',
       maxTags: this.tagsPhantomInputTarget.dataset.maxTags,
+      whitelist: [],
+      dropdown: {enabled: 0},
       transformTag(tag) {tag.value = tag.value.replace('#', '')}
     })
 
     this.tagify.on('add', () => {this._updateTagsInput()})
     this.tagify.on('remove', () => {this._updateTagsInput()})
 
-    let fetchTags = debounce((e) => {this._fetchTags(e)}, 300)
+    let fetchTags = debounce((e) => {this._fetchTags(e.detail.value, true)}, 300)
     this.tagify.on('input', (e) => fetchTags(e))
+
+    this._fetchTags('')
   }
 
   _updateTagsInput() {
@@ -55,16 +59,13 @@ export default class extends Controller {
     this.tagsList = val
   }
 
-  async _fetchTags(e) {
-    let value = e.detail.value
-
-    this.tagify.settings.whitelist.length = 0
+  async _fetchTags(value, showDropdown = false) {
     let resp = await get('/tags', {query: {q: value}, responseKind: 'json'})
 
     if (resp.ok) {
       let data = await resp.json
-      this.tagify.settings.whitelist = data.map((tag) => {return tag.name})
-      this.tagify.dropdown.show.call(this.tagify, value)
+      this.tagify.whitelist = data.map((tag) => {return tag.name})
+      if (showDropdown) this.tagify.dropdown.show.call(this.tagify, value)
     }
   }
 

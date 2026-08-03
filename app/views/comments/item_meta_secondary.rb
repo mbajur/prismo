@@ -31,7 +31,7 @@ module Views
                 DropdownMenuSeparator
                 DropdownMenuItem(href: edit_comment_path(@comment)) { "Edit comment" } if policy.edit?
                 # DropdownMenuItem(href: "#") { "Flag" }
-                DropdownMenuItem(href: comment_path(@comment), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }) { "Delete" }
+                DropdownMenuItem(href: comment_path(@comment), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }) { "Delete" } if policy.destroy?
               end
             end
           end

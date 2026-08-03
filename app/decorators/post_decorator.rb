@@ -56,15 +56,26 @@ class PostDecorator < Draper::Decorator
     end
   end
 
+  def thumb_url
+    if object.local_fedipub_entity?
+      object.thumb_url(:size_200) if object.thumb_data?
+    else
+      object.remote_image_url
+    end
+  end
+
   def to_meta_tags
+    alternate = []
+    alternate << {
+      href: object.federated_url, type: "application/activity+json"
+    } if object.local_fedipub_entity?
+
     {
-      title: object.name,
+      title: object.title,
       description: excerpt,
-      alternate: [{
-        href: local_url, type: 'application/activity+json'
-      }],
+      alternate: alternate,
       og: {
-        title: object.name,
+        title: object.title,
         image: (object.thumb_url(:size_200) if object.thumb.present?)
       }
     }

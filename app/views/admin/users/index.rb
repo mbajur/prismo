@@ -17,16 +17,16 @@ module Views
                 Table do
                   TableHeader do
                     TableRow do
-                      TableHead { t('.username') }
-                      TableHead { t('.domain') }
-                      TableHead {}
+                      TableHead { t(".username") }
+                      TableHead { t(".domain") }
+                      TableHead { }
                     end
                   end
 
                   TableBody do
                     @users.each do |user|
                       TableRow do
-                        TableCell(class: 'font-medium') do
+                        TableCell(class: "font-medium") do
                           if user.suspended?
                             span(class: "strike text-red-500") { user.username }
                           elsif user.silenced?
@@ -35,8 +35,8 @@ module Views
                             user.username
                           end
                         end
-                        TableCell { '-' }
-                        TableCell(class: "text-right") { link_to t('.edit'), admin_user_path(user.id) }
+                        TableCell { "-" }
+                        TableCell(class: "text-right") { link_to t(".edit"), admin_user_path(user.id) }
                       end
                     end
                   end

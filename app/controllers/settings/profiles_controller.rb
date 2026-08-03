@@ -17,7 +17,7 @@ class Settings::ProfilesController < ApplicationController
 
     if @user.update(user_params)
       # ActivityPub::UpdateDistributionJob.call_later(@user)
-      redirect_to settings_profile_path, notice: I18n.t('generic.changes_saved_msg')
+      redirect_to settings_profile_path, notice: I18n.t("generic.changes_saved_msg")
     else
       render Views::Settings::Profiles::Show.new(user: @user)
     end
@@ -31,7 +31,7 @@ class Settings::ProfilesController < ApplicationController
 
     if outcome.valid?
       sign_out current_user
-      flash[:success] = t('accounts.destroy.success')
+      flash[:success] = t("accounts.destroy.success")
       redirect_to :root
     else
       flash[:alert] = outcome.errors.full_messages.to_sentence

@@ -10,14 +10,14 @@ module Views
 
       def initialize(comment:, children: Comment.none)
         @comment = comment.discarded? ? RemovedCommentNull.new(comment) : comment
-        @user = @comment.user.decorate
+        @user = @comment.fedipub_actor.decorate
         @children = children
       end
 
       def view_template(&)
         li(class: "pl-2 flex flex-col gap-2 pb-2", id: dom_id(@comment)) do
           div(class: "flex items-center gap-2 text-sm") do
-            img(src: @comment.user.avatar_url, class: "w-4 h-4 rounded-full")
+            img(src: @user.avatar_url, class: "w-4 h-4 rounded-full")
             span(class: "underline") { link_to(@user, @user.path) }
             span(class: "text-gray-500") { timeago(@comment.created_at) }
           end

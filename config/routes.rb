@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
+  default_url_options Rails.application.config.action_mailer.default_url_options
+
   devise_for :users, controllers: {
-    registrations: "users/registrations",
+    registrations: "users/registrations"
   }
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -66,18 +68,20 @@ Rails.application.routes.draw do
 
 
   namespace :admin do
-    resource :settings, only: [:edit, :update]
-    resources :users, except: [:edit, :update, :destroy] do
+    resource :settings, only: [ :edit, :update ]
+    resources :users, except: [ :edit, :update, :destroy ] do
       post :suspend, on: :member
       post :silence, on: :member
       post :unsilence, on: :member
     end
-    resources :domain_blocks, except: [:edit, :update]
-    resources :flags, except: [:new, :create, :destroy] do
+    resources :domain_blocks, except: [ :edit, :update ]
+    resources :flags, except: [ :new, :create, :destroy ] do
       post :resolve, on: :member
       post :unresolve, on: :member
     end
   end
+
+  mount Fedipub::Engine => "/"
 
   # Defines the root path route ("/")
   # root "posts#index"

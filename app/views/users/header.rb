@@ -44,12 +44,12 @@ module Views
                   end
 
                   li do
-                    span(class: "text-lg/4 block font-semibold") { @user.followers_count }
+                    span(class: "text-lg/4 block font-semibold") { @user.fedipub_actor.followers.count }
                     span(class: "uppercase text-xs text-muted-foreground") { t(".followers") }
                   end
 
                   li do
-                    span(class: "text-lg/4 block font-semibold") { @user.following_count }
+                    span(class: "text-lg/4 block font-semibold") { @user.fedipub_actor.follows.count }
                     span(class: "uppercase text-xs text-muted-foreground") { t(".following") }
                   end
                 end

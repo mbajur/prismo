@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_24_123210) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_31_091608) do
   create_table "comment_hierarchies", id: false, force: :cascade do |t|
     t.integer "ancestor_id", null: false
     t.integer "descendant_id", null: false
@@ -26,15 +26,88 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_24_123210) do
     t.datetime "created_at", null: false
     t.integer "depth_cached", default: 0, null: false
     t.datetime "discarded_at"
+    t.string "federated_url"
+    t.integer "fedipub_actor_id"
     t.integer "likes_count", default: 0, null: false
     t.integer "parent_id"
     t.integer "post_id", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"
     t.index ["discarded_at"], name: "index_comments_on_discarded_at"
+    t.index ["fedipub_actor_id"], name: "index_comments_on_fedipub_actor_id"
     t.index ["parent_id"], name: "index_comments_on_parent_id"
     t.index ["post_id"], name: "index_comments_on_post_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "fedipub_activities", force: :cascade do |t|
+    t.string "action", null: false
+    t.integer "actor_id", null: false
+    t.string "cc"
+    t.datetime "created_at", null: false
+    t.integer "entity_id", null: false
+    t.string "entity_type", null: false
+    t.string "instrument"
+    t.string "result"
+    t.string "to"
+    t.datetime "undone_at"
+    t.datetime "updated_at", null: false
+    t.string "uuid"
+    t.index ["actor_id"], name: "index_fedipub_activities_on_actor_id"
+    t.index ["entity_type", "entity_id"], name: "index_fedipub_activities_on_entity"
+    t.index ["uuid"], name: "index_fedipub_activities_on_uuid", unique: true
+  end
+
+  create_table "fedipub_actors", force: :cascade do |t|
+    t.string "actor_type"
+    t.datetime "created_at", null: false
+    t.integer "entity_id"
+    t.string "entity_type"
+    t.json "extensions"
+    t.string "federated_url"
+    t.string "followers_url"
+    t.string "followings_url"
+    t.string "inbox_url"
+    t.boolean "local", default: false, null: false
+    t.string "name"
+    t.string "outbox_url"
+    t.text "private_key"
+    t.string "profile_url"
+    t.text "public_key"
+    t.string "server"
+    t.datetime "tombstoned_at"
+    t.datetime "updated_at", null: false
+    t.string "username"
+    t.string "uuid"
+    t.index ["entity_type", "entity_id"], name: "index_fedipub_actors_on_entity", unique: true
+    t.index ["federated_url"], name: "index_fedipub_actors_on_federated_url", unique: true
+    t.index ["uuid"], name: "index_fedipub_actors_on_uuid", unique: true
+  end
+
+  create_table "fedipub_followings", force: :cascade do |t|
+    t.integer "actor_id", null: false
+    t.datetime "created_at", null: false
+    t.string "federated_url"
+    t.integer "status", default: 0
+    t.integer "target_actor_id", null: false
+    t.datetime "updated_at", null: false
+    t.string "uuid"
+    t.index ["actor_id", "target_actor_id"], name: "index_fedipub_followings_on_actor_id_and_target_actor_id", unique: true
+    t.index ["actor_id"], name: "index_fedipub_followings_on_actor_id"
+    t.index ["target_actor_id"], name: "index_fedipub_followings_on_target_actor_id"
+    t.index ["uuid"], name: "index_fedipub_followings_on_uuid", unique: true
+  end
+
+  create_table "fedipub_hosts", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "domain", null: false
+    t.string "nodeinfo_url"
+    t.text "protocols", default: "[]"
+    t.text "services", default: "{}"
+    t.string "software_name"
+    t.string "software_version"
+    t.datetime "updated_at", null: false
+    t.index ["domain"], name: "index_fedipub_hosts_on_domain", unique: true
   end
 
   create_table "flags", force: :cascade do |t|
@@ -64,6 +137,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_24_123210) do
   create_table "groups", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name"
+    t.string "server"
     t.string "slug"
     t.boolean "supergroup", default: false
     t.datetime "updated_at", null: false
@@ -106,17 +180,21 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_24_123210) do
     t.text "description_cached"
     t.datetime "discarded_at"
     t.integer "dislikes_count", default: 0, null: false
+    t.string "federated_url"
+    t.integer "fedipub_actor_id"
     t.integer "group_id"
     t.integer "likes_count", default: 0, null: false
     t.datetime "modified_at"
     t.integer "modified_count", default: 0, null: false
+    t.string "remote_image_url"
     t.datetime "scrapped_at"
     t.string "title"
     t.datetime "updated_at", null: false
     t.string "url"
     t.string "url_domain"
     t.integer "url_meta_id"
-    t.integer "user_id", null: false
+    t.integer "user_id"
+    t.index ["fedipub_actor_id"], name: "index_posts_on_fedipub_actor_id"
     t.index ["group_id"], name: "index_posts_on_group_id"
     t.index ["url_meta_id"], name: "index_posts_on_url_meta_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
@@ -175,9 +253,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_24_123210) do
   end
 
   add_foreign_key "comments", "comments", column: "parent_id"
+  add_foreign_key "comments", "fedipub_actors"
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
+  add_foreign_key "fedipub_activities", "fedipub_actors", column: "actor_id"
+  add_foreign_key "fedipub_followings", "fedipub_actors", column: "actor_id"
+  add_foreign_key "fedipub_followings", "fedipub_actors", column: "target_actor_id"
   add_foreign_key "likes", "users"
+  add_foreign_key "posts", "fedipub_actors"
   add_foreign_key "posts", "groups"
   add_foreign_key "posts", "url_meta", column: "url_meta_id"
   add_foreign_key "posts", "users"

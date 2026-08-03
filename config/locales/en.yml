@@ -84,7 +84,7 @@ en:
         story_likes_per_day: "How many daily likes user can cast on stories. Set to 0 to disable the limit. Default: 10"
         comment_likes_per_day: "How many daily likes user can cast on comments. Set to 0 to disable the limit. Default: 10"
         closed_registrations_message: "Optional. HTML allowed."
-        story_title_update_time_limit: 'For how long (in minutes) user is able to change his post title. Set to 0 to disable the limit. Default: 60'
+        post_title_update_time_limit: 'For how long (in minutes) user is able to change his post title. Set to 0 to disable the limit. Default: 60'
         edit_counter_grace_period_minutes: 'For how long (in minutes) post/comment edits should not be included in edits counter. Set to 0 to disable. Default: 3'
       flag:
         summary: Please briefly describe what's wrong with the resource you want to flag.

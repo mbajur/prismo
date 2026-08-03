@@ -59,7 +59,7 @@ module RubyUI
     end
 
     def default_attrs
-      {data: {slot: "icon"}, class: "shrink-0 inline-flex items-center justify-start relative size-4 -ml-[3px] mr-1 text-foreground"}
+      { data: { slot: "icon" }, class: "shrink-0 inline-flex items-center justify-start relative size-4 -ml-[3px] mr-1 text-foreground" }
     end
   end
 end

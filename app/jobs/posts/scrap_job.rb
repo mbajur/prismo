@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'open-uri'
+require "open-uri"
 
 module Posts
   class ScrapJob < ApplicationJob

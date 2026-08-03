@@ -25,7 +25,7 @@ module Admin
 
       redirect_back(
         fallback_location: admin_users_path,
-        notice: 'User scheduled for suspension'
+        notice: "User scheduled for suspension"
       )
     end
 
@@ -37,7 +37,7 @@ module Admin
 
       redirect_back(
         fallback_location: admin_users_path,
-        notice: 'User silenced'
+        notice: "User silenced"
       )
     end
 
@@ -49,7 +49,7 @@ module Admin
 
       redirect_back(
         fallback_location: admin_users_path,
-        notice: 'User unsilenced'
+        notice: "User unsilenced"
       )
     end
 

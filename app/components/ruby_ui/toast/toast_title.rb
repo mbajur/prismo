@@ -10,7 +10,7 @@ module RubyUI
 
     def default_attrs
       {
-        data: {slot: "title"},
+        data: { slot: "title" },
         class: "font-medium leading-normal"
       }
     end

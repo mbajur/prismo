@@ -15,9 +15,11 @@ class Posts::Like < ActiveInteraction::Base
     like.user = user
 
     if like.save
-      # user.touch(:last_active_at)
+      user.touch(:last_active_at)
       # Accounts::UpdateKarmaJob.perform_later(post.user.id, "Post")
       # Posts::BroadcastChanges.run! post: post
+      post.like!(actor: user.fedipub_actor)
+      post.cache_likes
     else
       errors.merge!(like.errors)
     end
