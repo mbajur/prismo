@@ -46,7 +46,6 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       format.html { render Views::Posts::Show.new(post: @post, comments: @comments) }
-      format.activitypub { render json: @post.to_activitypub_object }
     end
   end
 
