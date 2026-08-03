@@ -11,10 +11,10 @@ class BodyParser
   end
 
   def call
-    sanitize!
     parse_mentions!
     convert_to_markdown!
     autolink!
+    sanitize!
 
     body
   end
