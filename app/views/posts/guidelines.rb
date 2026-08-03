@@ -34,8 +34,9 @@ module Views
 
       private
 
+      # @todo drop URI.escape
       def bookmarklet_href
-        URI.escape "javascript:(function(){javascript:location.href='#{new_post_url}?url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title)})()"
+        URI.escape "javascript:(function(){javascript:location.href='#{new_post_url}?url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title)})()" # rubocop:disable Lint/UriEscapeUnescape
       end
     end
   end
