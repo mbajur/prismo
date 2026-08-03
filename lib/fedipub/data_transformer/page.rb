@@ -32,9 +32,9 @@ module Fedipub
                      "published"    => entity.created_at,
                      "updated"      => entity.updated_at,
                      "attachment"   => [ {
-                      "type"      => "Link",
-                      "mediaType" => "text/html",
-                      "href"      => Rails.application.routes.url_helpers.post_url(entity)
+                       "type"      => "Link",
+                       "mediaType" => "text/html",
+                       "href"      => Rails.application.routes.url_helpers.post_url(entity)
                      } ]
       end
     end

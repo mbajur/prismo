@@ -83,7 +83,12 @@ class Post < ApplicationRecord
                                                             "name" => "##{tag.name}",
                                                             "href" => Rails.application.routes.url_helpers.tag_posts_url(tag)
                                                           }
-                                                        end
+                                                        end,
+                                                        "audience" => group.fedipub_actor.federated_url,
+                                                        "to" => [
+                                                          group.fedipub_actor.federated_url,
+                                                          Fediverse::Collection::PUBLIC
+                                                        ]
                                                       }
     else
       Fedipub::DataTransformer::Page.to_federation self,
@@ -96,7 +101,12 @@ class Post < ApplicationRecord
                                                          "name" => "##{tag.name}",
                                                          "href" => Rails.application.routes.url_helpers.tag_posts_url(tag)
                                                        }
-                                                     end
+                                                     end,
+                                                     "audience" => group.fedipub_actor.federated_url,
+                                                     "to" => [
+                                                       group.fedipub_actor.federated_url,
+                                                       Fediverse::Collection::PUBLIC
+                                                     ]
                                                    }
     end
   end
