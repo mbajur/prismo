@@ -4,6 +4,10 @@ class PostsController < ApplicationController
   def index
     @page_title = "Hot stories"
     @feed_title = @page_title
+    set_meta_tags alternate: [ {
+      href: posts_path(format: :atom),
+      type: "application/atom+xml"
+    } ]
 
     posts = PostsQuery.new.hot
     # posts = PostsQuery.new(posts).without_silenced
@@ -20,6 +24,10 @@ class PostsController < ApplicationController
   def recent
     @page_title = "Recent stories"
     @feed_title = @page_title
+    set_meta_tags alternate: [ {
+      href: recent_posts_path(format: :atom),
+      type: "application/atom+xml"
+    } ]
 
     posts = PostsQuery.new.recent
     # posts = PostsQuery.new(posts).without_silenced
