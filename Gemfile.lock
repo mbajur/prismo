@@ -146,6 +146,7 @@ GEM
       railties (>= 7.0)
       responders
       warden (~> 1.2.3)
+    diff-lcs (1.6.2)
     discard (2.0.0)
       activerecord (>= 7.0, < 9.0)
     dotenv (3.2.0)
@@ -168,6 +169,13 @@ GEM
     ethon (0.18.0)
       ffi (>= 1.15.0)
       logger
+    factory_bot (6.6.0)
+      activesupport (>= 6.1.0)
+    factory_bot_rails (6.5.1)
+      factory_bot (~> 6.5)
+      railties (>= 6.1.0)
+    faker (3.8.0)
+      i18n (>= 1.8.11, < 2)
     faraday (2.14.3)
       faraday-net_http (>= 2.0, < 3.5)
       json
@@ -428,6 +436,23 @@ GEM
       railties (>= 7.0)
     rexml (3.4.4)
     rinku (2.0.6)
+    rspec-core (3.13.6)
+      rspec-support (~> 3.13.0)
+    rspec-expectations (3.13.5)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.13.0)
+    rspec-mocks (3.13.8)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.13.0)
+    rspec-rails (8.0.4)
+      actionpack (>= 7.2)
+      activesupport (>= 7.2)
+      railties (>= 7.2)
+      rspec-core (>= 3.13.0, < 5.0.0)
+      rspec-expectations (>= 3.13.0, < 5.0.0)
+      rspec-mocks (>= 3.13.0, < 5.0.0)
+      rspec-support (>= 3.13.0, < 5.0.0)
+    rspec-support (3.13.7)
     rubocop (1.88.2)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
@@ -468,9 +493,15 @@ GEM
     search_cop (1.5.0)
       treetop
     securerandom (0.4.1)
+    shoulda-matchers (8.0.1)
+      activesupport (>= 7.2)
     shrine (3.9.0)
       content_disposition (~> 1.0)
       down (~> 5.1)
+    simplecov (1.0.3)
+    simplecov-cobertura (4.0.0)
+      rexml
+      simplecov (~> 1.0)
     sin_lru_redux (2.5.2)
     solid_cable (4.0.1)
       actioncable (>= 7.2)
@@ -586,6 +617,8 @@ DEPENDENCIES
   discard (~> 2.0)
   dotenv
   draper (~> 4.0)
+  factory_bot_rails
+  faker
   fedipub!
   gutentag (~> 3.0)
   httplog
@@ -605,10 +638,14 @@ DEPENDENCIES
   rails-settings-cached
   redcarpet (~> 3.6)
   rinku (~> 2.0)
+  rspec-rails (~> 8.0.0)
   rubocop-rails-omakase
   ruby_ui (~> 1.4)
   search_cop (~> 1.5)
+  shoulda-matchers
   shrine (~> 3.6)
+  simplecov
+  simplecov-cobertura
   solid_cable
   solid_cache
   solid_queue

@@ -6,6 +6,32 @@ on:
     branches: [ main ]
 
 jobs:
+  rspec:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Install libvips
+        run: sudo apt-get install -y libvips
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Run specs suite
+        run: bundle exec rspec --format documentation
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v7
+        with:
+          files: coverage/coverage.xml
+          flags: rspec
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: false
+
   scan_ruby:
     runs-on: ubuntu-latest
 
@@ -20,10 +46,10 @@ jobs:
 
       - name: Scan for common Rails security vulnerabilities using static analysis
         run: bin/brakeman --no-pager
-      
+
       - name: Scan for known security vulnerabilities in gems used
         run: bin/bundler-audit
-      
+
   scan_js:
     runs-on: ubuntu-latest
 

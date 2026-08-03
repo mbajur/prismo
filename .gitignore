@@ -36,3 +36,5 @@
 
 .env.local
 .kamal/secrets-common
+
+coverage
