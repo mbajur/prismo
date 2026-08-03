@@ -16,7 +16,7 @@ module Fedipub
 
     def avatar_url
       if object.local?
-        object.entity.avatar_url(object)
+        object.entity.avatar_url
       else
         object.extensions.dig("icon", "url")
       end
