@@ -26,16 +26,16 @@ class Posts::CreateUpdateBase < ActiveInteraction::Base
   end
 
   def min_tags_amount
-    return if Setting.min_story_tags.zero?
-    return if tags.length >= Setting.min_story_tags
+    return if Setting.min_post_tags.zero?
+    return if tags.length >= Setting.min_post_tags
 
-    errors.add(:tag_list, "needs to have at least #{Setting.min_story_tags} tags selected")
+    errors.add(:tag_list, "needs to have at least #{Setting.min_post_tags} tags selected")
   end
 
   def max_tags_amount
-    return if Setting.max_story_tags.zero?
-    return if tags.length <= Setting.max_story_tags
+    return if Setting.max_post_tags.zero?
+    return if tags.length <= Setting.max_post_tags
 
-    errors.add(:tag_list, "needs to have at most #{Setting.max_story_tags} tags selected")
+    errors.add(:tag_list, "needs to have at most #{Setting.max_post_tags} tags selected")
   end
 end
