@@ -57,7 +57,7 @@ module Views
 
               div(class: "flex-1") do
                 input(
-                  data: { post_form_target: "tagsPhantomInput", max_tags: Setting.max_story_tags },
+                  data: { post_form_target: "tagsPhantomInput", max_tags: Setting.max_post_tags },
                   value: f.object.tag_list,
                   class: "flex h-9 w-full rounded-md border bg-background px-3 py-1 text-sm shadow-xs transition-[color,box-shadow] border-border ring-0 ring-ring/0 placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 file:border-0 file:bg-transparent file:text-sm file:font-medium aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:border-ring focus-visible:shadow-sm"
                 )
