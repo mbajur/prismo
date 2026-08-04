@@ -124,3 +124,5 @@ gem "store_model", "~> 4.6"
 gem "fedipub", git: "https://gitlab.com/fedipub/fedipub.git", branch: "preload-security-schema"
 
 gem "appsignal"
+
+gem "webmention"
