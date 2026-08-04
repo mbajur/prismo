@@ -60,6 +60,8 @@ class CommentsController < ApplicationController
 
     if @comment.save
       @comment.cache_body
+      Comments::Like.run!(comment: @comment, user: current_user)
+
       redirect_to post_path(@post, anchor: dom_id(@comment)), notice: "Comment was successfully created."
     else
       render :new, status: :unprocessable_entity
