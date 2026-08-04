@@ -60,6 +60,10 @@ huge amount of Prismo code base is heavily based on Mastodon code and it would b
 
 Thank you ❤️
 
+## Sponsors
+
+- Application performance monitoring sponsored by [AppSignal](https://appsignal.com)
+
 ## License
 
 Prismo
