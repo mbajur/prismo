@@ -8,5 +8,9 @@ FactoryBot.define do
     email { Faker::Internet.unique.email }
     password { Faker::Internet.password(min_length: 8) }
     confirmed_at { Time.current }
+
+    trait :admin do
+      admin { true }
+    end
   end
 end
