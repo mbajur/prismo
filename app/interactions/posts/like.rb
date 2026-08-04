@@ -9,27 +9,10 @@ class Posts::Like < ActiveInteraction::Base
   end
 
   def execute
-    return existing_like if existing_like.present?
+    user.touch(:last_active_at)
+    post.like!(actor: user.fedipub_actor)
+    post.cache_likes
 
-    like = ::Like.new(likeable: post)
-    like.user = user
-
-    if like.save
-      user.touch(:last_active_at)
-      # Accounts::UpdateKarmaJob.perform_later(post.user.id, "Post")
-      # Posts::BroadcastChanges.run! post: post
-      post.like!(actor: user.fedipub_actor)
-      post.cache_likes
-    else
-      errors.merge!(like.errors)
-    end
-
-    like
-  end
-
-  private
-
-  def existing_like
-    @existing_like ||= ::Like.find_by(likeable: post, user: user)
+    Users::UpdateKarmaJob.perform_later(post.user, "Post")
   end
 end
