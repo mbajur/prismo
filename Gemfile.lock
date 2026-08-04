@@ -1,7 +1,7 @@
 GIT
   remote: https://gitlab.com/fedipub/fedipub.git
-  revision: b84ff11dfa1202e2a31f34cd8450e23689bb0d6f
-  branch: main
+  revision: 43cbd5290bffb3f12a0317bee94e88538c92db41
+  branch: preload-security-schema
   specs:
     fedipub (0.8.0)
       faraday
@@ -410,7 +410,7 @@ GEM
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
     rake (13.4.2)
-    rbs (4.1.1)
+    rbs (4.1.2)
       logger
       prism (>= 1.6.0)
       tsort
@@ -590,7 +590,7 @@ GEM
       activerecord (>= 7.2)
       zeitwerk (>= 2.7)
     yaml (0.4.0)
-    zeitwerk (2.8.2)
+    zeitwerk (2.8.3)
 
 PLATFORMS
   aarch64-linux
