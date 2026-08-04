@@ -48,8 +48,9 @@ class PostsController < ApplicationController
     set_liked_post_ids(Post.where(id: @post.id))
 
     # @comments = @post.comments.includes(:user, :root_cached).hash_tree
-    @comments = @post.comments.includes(:user).hash_tree
+    @comments = @post.comments.includes(:fedipub_actor, :parent).hash_tree
     set_liked_comment_ids(@post.comments)
+
     @comment = Comment.new
 
     respond_to do |format|

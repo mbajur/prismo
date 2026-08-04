@@ -8,7 +8,7 @@ class PostsQuery
   end
 
   def with_includes
-    relation.includes(:user, :url_meta, :tags, :taggings)
+    relation.includes(:fedipub_actor, :url_meta, :tags, :taggings, group: [ :fedipub_actor ])
   end
 
   def all

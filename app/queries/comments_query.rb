@@ -8,7 +8,7 @@ class CommentsQuery
   end
 
   def with_includes
-    relation.includes(:parent, :user, :post)
+    relation.includes(:parent, :fedipub_actor, :post)
   end
 
   def with_story
