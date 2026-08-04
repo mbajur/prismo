@@ -126,3 +126,5 @@ gem "fedipub", git: "https://gitlab.com/fedipub/fedipub.git", branch: "preload-s
 gem "appsignal"
 
 gem "webmention"
+
+gem "mission_control-jobs"

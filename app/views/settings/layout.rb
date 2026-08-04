@@ -20,6 +20,7 @@ module Views
                     nav.item(edit_admin_settings_path) { t(".site_settings") }
                     nav.item(admin_users_path) { t(".users") }
                     nav.item(admin_flags_path) { t(".flags") }
+                    nav.item("/admin/jobs") { t(".jobs") }
                     # nav.item(admin_domain_blocks_path) { t('.blocked_domains') }
                   end
                 end

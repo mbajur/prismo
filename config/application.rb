@@ -38,5 +38,7 @@ module Prismo
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    config.mission_control.jobs.http_basic_auth_enabled = false
   end
 end
