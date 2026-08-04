@@ -126,4 +126,11 @@ class User < ApplicationRecord
   def following?(other_user)
     active_follows.where(following: other_user).exists?
   end
+
+  def refresh_karma
+    update(
+      comments_karma: comments.sum(:likes_count),
+      posts_karma: posts.sum(:likes_count)
+    )
+  end
 end
