@@ -38,3 +38,5 @@
 .kamal/secrets-common
 
 coverage
+
+app/assets/builds
