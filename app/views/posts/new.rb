@@ -10,7 +10,7 @@ module Views
       def view_template(&)
         render Components::Page.new(content_shifted: true) do
           div(class: "grid grid-cols-12 gap-4") do
-            div(class: "col-span-8") do
+            div(class: "col-span-12 lg:col-span-8") do
               render Components::Box.new() do
                 render Components::BoxContent.new() do
                   h1(class: "text-lg font-medium mb-2") { t(".title") }
@@ -23,7 +23,7 @@ module Views
               end
             end
 
-            div(class: "col-span-4") do
+            div(class: "col-span-12 lg:col-span-4") do
               render Views::Posts::Guidelines.new()
             end
           end

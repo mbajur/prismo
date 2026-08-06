@@ -16,6 +16,8 @@ class User < ApplicationRecord
   has_many :passive_follows, class_name: "Follow", as: :following, dependent: :destroy
   has_many :followers, -> { order("follows.id desc") }, through: :passive_follows, source_type: "User"
   has_many :following, -> { order("follows.id desc") }, through: :active_follows, source_type: "User"
+  has_many :posts, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable

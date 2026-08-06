@@ -10,16 +10,16 @@ module Views
 
       def view_template(&)
         form_with model: @post, scope: :post, url: url, method: method, data: { controller: "post-form" } do |f|
-          div(class: "flex flex-col gap-6 mb-6") do
+          div(class: "flex flex-col gap-4 lg:gap-6 mb-6") do
             Alert(variant: :destructive) do
               AlertTitle { "Oopsie daisy!" }
               AlertDescription { f.object.errors.full_messages.to_sentence }
             end if f.object.errors.any?
 
-            div(class: "flex gap-2") do
-              f.label :url, class: "w-24 empty:hidden text-sm font-medium leading-9 peer-disabled:cursor-not-allowed peer-disabled:opacity-70 peer-aria-disabled:cursor-not-allowed peer-aria-disabled:opacity-70 peer-aria-disabled:pointer-events-none"
+            div(class: "grid grid-cols-12 gap-2") do
+              f.label :url, class: "col-span-12 lg:col-span-2 empty:hidden text-sm font-medium lg:leading-9 peer-disabled:cursor-not-allowed peer-disabled:opacity-70 peer-aria-disabled:cursor-not-allowed peer-aria-disabled:opacity-70 peer-aria-disabled:pointer-events-none"
 
-              div(class: "flex-1") do
+              div(class: "col-span-12 lg:col-span-10") do
                 div(class: "flex gap-2") do
                   f.url_field :url, placeholder: "https://...",
                                     data: { post_form_target: "urlInput", action: "input->post-form#handleUrlChange" },
@@ -41,10 +41,10 @@ module Views
               end
             end
 
-            div(class: "flex gap-2") do
-              f.label :title, class: "w-24 empty:hidden text-sm font-medium leading-9 peer-disabled:cursor-not-allowed peer-disabled:opacity-70 peer-aria-disabled:cursor-not-allowed peer-aria-disabled:opacity-70 peer-aria-disabled:pointer-events-none"
+            div(class: "grid grid-cols-12 gap-2") do
+              f.label :title, class: "col-span-12 lg:col-span-2 empty:hidden text-sm font-medium lg:leading-9 peer-disabled:cursor-not-allowed peer-disabled:opacity-70 peer-aria-disabled:cursor-not-allowed peer-aria-disabled:opacity-70 peer-aria-disabled:pointer-events-none"
 
-              div(class: "flex-1") do
+              div(class: "col-span-12 lg:col-span-10") do
                 f.text_field :title, data: { post_form_target: "titleInput" },
                                     required: false,
                                     readonly: @post.is_a?(::Posts::Update) && !policy(@post.post).update_title?,
@@ -52,10 +52,10 @@ module Views
               end
             end
 
-            div(class: "flex gap-2") do
-              f.label :tag_list, class: "w-24 empty:hidden text-sm font-medium leading-9 peer-disabled:cursor-not-allowed peer-disabled:opacity-70 peer-aria-disabled:cursor-not-allowed peer-aria-disabled:opacity-70 peer-aria-disabled:pointer-events-none"
+            div(class: "grid grid-cols-12 gap-2") do
+              f.label :tag_list, class: "col-span-12 lg:col-span-2 empty:hidden text-sm font-medium lg:leading-9 peer-disabled:cursor-not-allowed peer-disabled:opacity-70 peer-aria-disabled:cursor-not-allowed peer-aria-disabled:opacity-70 peer-aria-disabled:pointer-events-none"
 
-              div(class: "flex-1") do
+              div(class: "col-span-12 lg:col-span-10") do
                 input(
                   data: { post_form_target: "tagsPhantomInput", max_tags: Setting.max_post_tags },
                   value: f.object.tag_list,
@@ -67,10 +67,10 @@ module Views
               end
             end
 
-            div(class: "flex gap-2") do
-              f.label :description, class: "w-24 empty:hidden text-sm font-medium leading-9 peer-disabled:cursor-not-allowed peer-disabled:opacity-70 peer-aria-disabled:cursor-not-allowed peer-aria-disabled:opacity-70 peer-aria-disabled:pointer-events-none"
+            div(class: "grid grid-cols-12 gap-2") do
+              f.label :description, class: "col-span-12 lg:col-span-2 empty:hidden text-sm font-medium lg:leading-9 peer-disabled:cursor-not-allowed peer-disabled:opacity-70 peer-aria-disabled:cursor-not-allowed peer-aria-disabled:opacity-70 peer-aria-disabled:pointer-events-none"
 
-              div(class: "flex-1") do
+              div(class: "col-span-12 lg:col-span-10") do
                 f.marksmith :description
                 small(class: "text-muted-foreground") { t(".description_help") }
               end
