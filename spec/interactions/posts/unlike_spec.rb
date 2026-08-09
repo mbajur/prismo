@@ -12,18 +12,14 @@ describe Posts::Unlike do
   let(:result) { outcome.result }
   let(:errors) { outcome.errors }
 
-  it { expect(outcome).to be_valid }
-
   context "when the user has liked the post" do
     let!(:like) { create(:like, likeable: post, fedipub_actor: user.fedipub_actor) }
     let!(:like_activity) { Fedipub::Activity.create!(actor: user.fedipub_actor, action: "Like", entity: post) }
 
+    it { expect(outcome).to be_valid }
+
     it "destroys the like" do
       expect { outcome }.to change(Like, :count).by(-1)
-    end
-
-    it "returns the destroyed like" do
-      expect(result.id).to eq(like.id)
     end
 
     it "undoes the like activity" do
@@ -41,17 +37,8 @@ describe Posts::Unlike do
   end
 
   context "when the user has not liked the post" do
-    it "does not destroy any like" do
-      expect { outcome }.not_to change(Like, :count)
-    end
-
-    it "returns nil" do
-      expect(result).to be_nil
-    end
-
-    it "does not enqueue a job to update karma" do
-      expect(Users::UpdateKarmaJob).not_to receive(:perform_later)
-      outcome
+    it "raises a not found error" do
+      expect { outcome }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 end

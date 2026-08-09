@@ -14,27 +14,23 @@ class ApplicationController < ActionController::Base
     return unless user_signed_in?
 
     Current.liked_post_ids =
-      Fedipub::Activity
-        .where(actor: current_user.fedipub_actor,
-               action: "Like",
-               entity_type: "Post",
-               entity_id: posts.ids,
-               undone_at: nil)
+      Like
+        .where(fedipub_actor: current_user.fedipub_actor,
+               likeable_type: "Post",
+               likeable_id: posts.ids)
         .distinct
-        .pluck(:entity_id)
+        .pluck(:likeable_id)
   end
 
   def set_liked_comment_ids(comments)
     return unless user_signed_in?
 
     Current.liked_comment_ids =
-      Fedipub::Activity
-        .where(actor: current_user.fedipub_actor,
-               action: "Like",
-               entity_type: "Comment",
-               entity_id: comments.ids,
-               undone_at: nil)
+      Like
+        .where(fedipub_actor: current_user.fedipub_actor,
+               likeable_type: "Comment",
+               likeable_id: comments.ids)
         .distinct
-        .pluck(:entity_id)
+        .pluck(:likeable_id)
   end
 end

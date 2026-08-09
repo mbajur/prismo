@@ -18,7 +18,7 @@ class Posts::Like < ActiveInteraction::Base
     if like.new_record?
       like.save!
       post.like!(actor: user.fedipub_actor)
-      post.cache_likes
+      # post.cache_likes
 
       Users::UpdateKarmaJob.perform_later(post.user, "Post")
     end
