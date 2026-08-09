@@ -10,9 +10,17 @@ class Comments::Like < ActiveInteraction::Base
 
   def execute
     user.touch(:last_active_at)
-    comment.like!(actor: user.fedipub_actor)
-    comment.cache_likes
+    like = Like.find_or_initialize_by(
+      likeable: comment,
+      fedipub_actor: user.fedipub_actor
+    )
 
-    Users::UpdateKarmaJob.perform_later(comment.user, "Comment")
+    if like.new_record?
+      like.save!
+      comment.like!(actor: user.fedipub_actor)
+      comment.cache_likes
+
+      Users::UpdateKarmaJob.perform_later(comment.user, "Comment")
+    end
   end
 end

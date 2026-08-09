@@ -7,8 +7,12 @@ module ActivityPub
       entity = Fedipub::Utils::Object.find_or_create!(object)
       raise ActiveRecord::RecordNotFound unless entity
 
-      Fedipub::Activity.find_or_create_by(actor: actor, action: "Like", entity: entity, undone_at: nil)
-      entity.cache_likes
+      like = Like.find_or_initialize_by(likeable: entity, fedipub_actor: actor)
+      if like.new_record?
+        like.save!
+        entity.like!(actor: actor)
+        entity.cache_likes
+      end
     end
   end
 end
