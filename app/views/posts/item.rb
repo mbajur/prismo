@@ -15,7 +15,7 @@ module Views
 
       def view_template(&)
         div(class: "flex gap-4 pb-4", id: dom_id(@post)) do
-          div(class: "") do
+          div do
             a(href: post_path(@post), class: "w-12 md:w-30 bg-muted aspect-square block rounded-sm relative") do
               if @post.article?
                 render Components::Icons::Text.new(class: "w-4 h-4 text-muted-foreground/30 m-auto absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 z-2")
@@ -46,13 +46,15 @@ module Views
                   link_to(@group, @group.path)
                 end
               end
-              li { @post.url_domain } if @post.url_domain.present?
+              li(class: "max-w-16 md:max-w-none truncate") { @post.url_domain } if @post.url_domain.present?
 
               primary_tags.each do |tag|
                 li { link_to "##{tag.name}", tag_posts_path(tag.name) }
               end
 
-              li { "+#{secondary_tags.count} more" } if secondary_tags.any?
+              li(class: "truncate") do
+                "+#{secondary_tags.count} <span class='hidden md:inline'>more</span>".html_safe
+              end if secondary_tags.any?
             end
 
             div(class: "text-sm") do
@@ -61,9 +63,9 @@ module Views
 
             ul(class: "flex items-center gap-3 text-sm text-gray-500") do
               li { render Views::Posts::LikeBtn.new(post: @post) }
-              li { pluralize(@post.comments_count, "comment") }
+              li(class: "truncate") { pluralize(@post.comments_count, "comment") }
               li do
-                link_to(@post.decorate.path) do
+                link_to(@post.decorate.path, class: "truncate") do
                   span { "posted " }
                   span { timeago(@post.created_at) }
                   span { " ago" }
