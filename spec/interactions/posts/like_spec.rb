@@ -23,9 +23,8 @@ describe Posts::Like do
     outcome
   end
 
-  it "caches likes" do
-    expect(post).to receive(:cache_likes)
-    outcome
+  it "recalculates likes" do
+    expect { outcome }.to change { post.likes_count }
   end
 
   it "enqueues a job to update karma" do

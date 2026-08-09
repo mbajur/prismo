@@ -18,7 +18,6 @@ class Comments::Like < ActiveInteraction::Base
     if like.new_record?
       like.save!
       comment.like!(actor: user.fedipub_actor)
-      # comment.cache_likes
 
       Users::UpdateKarmaJob.perform_later(comment.user, "Comment")
     end
