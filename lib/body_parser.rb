@@ -15,6 +15,7 @@ class BodyParser
     convert_to_markdown!
     autolink!
     sanitize!
+    remove_empty_paragraphs!
 
     body
   end
@@ -46,6 +47,10 @@ class BodyParser
 
   def autolink!
     @body = Rinku.auto_link(body, :urls)
+  end
+
+  def remove_empty_paragraphs!
+    @body = body.gsub(%r{<p>(\s|&nbsp;|<br\s*/?>)*</p>}, "")
   end
 
   def convert_to_markdown!
