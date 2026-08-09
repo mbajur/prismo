@@ -127,7 +127,7 @@ class Post < ApplicationRecord
 
   def cache_likes
     update(
-      likes_count: Fedipub::Activity.where(action: "Like", entity: self, undone_at: nil).count
+      likes_count: Like.where(likeable: self).count
     )
   end
 
