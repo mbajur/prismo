@@ -10,7 +10,7 @@ module Views
 
       def view_template(&)
         div(class: "flex items-center gap-[2px] border-1 rounded-full #{'border-orange-400 text-orange-400 bg-orange-50' if upvoted?}", id: dom_id(@post, :like_btn)) do
-          button_to(button_url, class: "p-1 cursor-pointer rounded-full #{upvoted? ? 'hover:text-white hover:bg-orange-500' : 'hover:text-orange-400 hover:bg-secondary'}", method: :post, form: { class: "flex" }) do
+          button_to(button_url, class: "p-1 cursor-pointer rounded-full #{upvoted? ? 'hover:bg-orange-100' : 'hover:text-orange-400 hover:bg-secondary'}", method: :post, form: { class: "flex" }) do
             Components::Icons::Upvote(class: "w-4 h-4")
           end
           span(class: "pr-3 text-xs font-medium") { @post.likes_count }
