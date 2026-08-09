@@ -15,8 +15,8 @@ module Views
 
       def view_template(&)
         div(class: "flex gap-4 pb-4", id: dom_id(@post)) do
-          div(class: "w-30") do
-            a(href: post_path(@post), class: "bg-muted aspect-square block rounded-sm relative") do
+          div(class: "") do
+            a(href: post_path(@post), class: "w-12 md:w-30 bg-muted aspect-square block rounded-sm relative") do
               if @post.article?
                 render Components::Icons::Text.new(class: "w-4 h-4 text-muted-foreground/30 m-auto absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 z-2")
               else
