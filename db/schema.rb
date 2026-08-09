@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_04_173648) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_09_172224) do
   create_table "comment_hierarchies", id: false, force: :cascade do |t|
     t.integer "ancestor_id", null: false
     t.integer "descendant_id", null: false
@@ -165,12 +165,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_04_173648) do
 
   create_table "likes", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.integer "fedipub_actor_id"
     t.integer "likeable_id", null: false
     t.string "likeable_type", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id", null: false
+    t.index ["fedipub_actor_id"], name: "index_likes_on_fedipub_actor_id"
     t.index ["likeable_type", "likeable_id"], name: "index_likes_on_likeable"
-    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -260,7 +260,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_04_173648) do
   add_foreign_key "fedipub_activities", "fedipub_actors", column: "actor_id"
   add_foreign_key "fedipub_followings", "fedipub_actors", column: "actor_id"
   add_foreign_key "fedipub_followings", "fedipub_actors", column: "target_actor_id"
-  add_foreign_key "likes", "users"
+  add_foreign_key "likes", "fedipub_actors"
   add_foreign_key "posts", "fedipub_actors"
   add_foreign_key "posts", "groups"
   add_foreign_key "posts", "url_meta", column: "url_meta_id"
