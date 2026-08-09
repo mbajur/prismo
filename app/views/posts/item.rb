@@ -4,6 +4,7 @@ module Views
       include Phlex::Rails::Helpers::LinkTo
       include Phlex::Rails::Helpers::Pluralize
       include Phlex::Rails::Helpers::DOMID
+      include Phlex::Rails::Helpers::ButtonTo
 
       def initialize(post:)
         @post = post.decorate
@@ -14,10 +15,6 @@ module Views
 
       def view_template(&)
         div(class: "flex gap-4 pb-4", id: dom_id(@post)) do
-          div(class: "w-6 text-center font-bold text-sm") do
-            render Views::Posts::LikeBtn.new(post: @post)
-          end
-
           div(class: "w-30") do
             a(href: post_path(@post), class: "bg-muted aspect-square block rounded-sm relative") do
               if @post.article?
@@ -63,6 +60,7 @@ module Views
             end
 
             ul(class: "flex items-center gap-3 text-sm text-gray-500") do
+              li { render Views::Posts::LikeBtn.new(post: @post) }
               li { pluralize(@post.comments_count, "comment") }
               li do
                 link_to(@post.decorate.path) do
