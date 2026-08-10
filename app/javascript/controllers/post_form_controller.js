@@ -38,7 +38,7 @@ export default class extends Controller {
     let _this = this
 
     this.tagify = new Tagify(this.tagsPhantomInputTarget, {
-      delimiters: ', ',
+      delimiters: ',| ',
       maxTags: this.tagsPhantomInputTarget.dataset.maxTags,
       whitelist: [],
       dropdown: {enabled: 0},
