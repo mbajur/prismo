@@ -43,8 +43,6 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id]).decorate
-    expires_in 1.hour, public: true if !user_signed_in?
-    return if fresh_when(@post, public: !user_signed_in?)
 
     set_meta_tags @post
     set_liked_post_ids(Post.where(id: @post.id))
