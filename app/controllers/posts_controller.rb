@@ -43,7 +43,7 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id]).decorate
-    fresh_when(@post)
+    fresh_when(@post, public: true)
 
     set_meta_tags @post
     set_liked_post_ids(Post.where(id: @post.id))
