@@ -33,4 +33,8 @@ class ApplicationController < ActionController::Base
         .distinct
         .pluck(:likeable_id)
   end
+
+  def mastodon_request?
+    request.user_agent =~ /Mastodon/
+  end
 end

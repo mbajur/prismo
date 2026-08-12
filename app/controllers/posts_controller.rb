@@ -43,19 +43,26 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id]).decorate
-
     set_meta_tags @post
-    set_liked_post_ids(Post.where(id: @post.id))
 
-    # @comments = @post.comments.includes(:user, :root_cached).hash_tree
-    @comments = @post.comments.includes(:fedipub_actor, :parent).hash_tree
-    set_liked_comment_ids(@post.comments)
+    # We're doing that to avoid rendering the full post template for Mastodon
+    # link preview requests.
+    if mastodon_request?
+      respond_to do |format|
+        format.html { render(partial: "shared/meta_tags", layout: false) }
+        format.activitypub { render json: @post.to_activitypub_object }
+      end
+    else
+      @comments = @post.comments.includes(:fedipub_actor, :parent).hash_tree
+      set_liked_post_ids(Post.where(id: @post.id))
+      set_liked_comment_ids(@post.comments)
 
-    @comment = Comment.new
+      @comment = Comment.new
 
-    respond_to do |format|
-      format.html { render Views::Posts::Show.new(post: @post, comments: @comments) }
-      format.activitypub { render json: @post.to_activitypub_object }
+      respond_to do |format|
+        format.html { render Views::Posts::Show.new(post: @post, comments: @comments) }
+        format.activitypub { render json: @post.to_activitypub_object }
+      end
     end
   end
 
