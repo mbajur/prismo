@@ -127,7 +127,7 @@ class PostsController < ApplicationController
       redirect_to path, notice: "Post has been updated"
     else
       post = outcome
-      render Views::Posts::Edit.new(post: post)
+      render Views::Posts::Edit.new(post: post), status: :unprocessable_entity
     end
   end
 
