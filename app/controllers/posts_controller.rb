@@ -114,7 +114,7 @@ class PostsController < ApplicationController
     authorize post
 
     outcome = Posts::Update.run(
-      post: post,
+      post: post.object,
       url: params.fetch(:post)[:url],
       title: params.fetch(:post)[:title],
       tag_list: params.fetch(:post)[:tag_list],
