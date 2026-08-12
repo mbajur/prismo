@@ -1,4 +1,6 @@
 class PostsController < ApplicationController
+  helper Fedipub::ServerHelper
+
   before_action :authenticate_user!, only: %i[new create edit update like unlike]
   before_action :ensure_short_id_used, only: [ :show ]
 
@@ -44,6 +46,7 @@ class PostsController < ApplicationController
 
   def show
     @post = find_post
+    @publishable = @post
     set_meta_tags @post
 
     # We're doing that to avoid rendering the full post template for Mastodon
@@ -62,7 +65,7 @@ class PostsController < ApplicationController
 
       respond_to do |format|
         format.html { render Views::Posts::Show.new(post: @post, comments: @comments) }
-        format.activitypub { render json: @post.to_activitypub_object }
+        format.activitypub { render "fedipub/server/published/show", formats: [ :activitypub ] }
       end
     end
   end

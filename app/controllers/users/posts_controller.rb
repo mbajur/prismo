@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
 class Users::PostsController < Users::BaseController
+  helper Fedipub::ServerHelper
+
   def index
     @user = find_user
+    @actor = @user.fedipub_actor
     @feed_title = "Hot posts by #{@user}"
     set_meta_tags @user.to_meta_tags.merge(title: @feed_title)
 
@@ -14,6 +17,7 @@ class Users::PostsController < Users::BaseController
 
     respond_to do |format|
       format.html { render Views::Users::Posts::Index.new(user: @user, posts: @posts, pagy: @pagy) }
+      format.activitypub { render "fedipub/server/actors/show", formats: [ :activitypub ] }
       format.atom { render "posts/index" }
     end
   end
