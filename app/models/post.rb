@@ -26,11 +26,24 @@ class Post < ApplicationRecord
                        soft_deleted_method: :discarded?,
                        soft_delete_date_method: :discarded_at,
                        actor_entity_method: :user,
-                       route_path_segment: :posts
+                       route_path_segment: :posts,
+                       url_param: :short_id
 
   on_fedipub_delete_requested :discard
 
   after_create :create_group_announce, if: :local_fedipub_entity?
+
+  def self.find_by_short_id(short_id)
+    find_by(short_id:)
+  end
+
+  def self.find_by_short_id!(short_id)
+    find_by!(short_id:)
+  end
+
+  def self.find_by_short_id_or_id!(short_id_or_id)
+    find_by(short_id: short_id_or_id) || find(short_id_or_id)
+  end
 
   # Only "top level" posts should be saved as Post; replies are handled by
   # Comment
@@ -133,5 +146,15 @@ class Post < ApplicationRecord
 
   def create_group_announce
     announce!(actor: group.fedipub_actor)
+  end
+
+  def to_param
+    short_id
+  end
+
+  private
+
+  def assign_defaults
+    self.short_id ||= ShortId.new(self.class).generate
   end
 end
