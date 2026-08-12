@@ -136,7 +136,7 @@ class PostsController < ApplicationController
     Current.liked_post_ids = [ @post.id ]
     authorize @post
 
-    @outcome = Posts::Like.run(post: @post, user: current_user)
+    @outcome = Posts::Like.run(post: @post.object, user: current_user)
   end
 
   def unlike
@@ -144,7 +144,7 @@ class PostsController < ApplicationController
     Current.liked_post_ids = []
     authorize @post
 
-    @outcome = Posts::Unlike.run(post: @post, user: current_user)
+    @outcome = Posts::Unlike.run(post: @post.object, user: current_user)
     @post.reload
   end
 
