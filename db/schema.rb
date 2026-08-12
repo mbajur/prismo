@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_09_172224) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_12_134702) do
   create_table "comment_hierarchies", id: false, force: :cascade do |t|
     t.integer "ancestor_id", null: false
     t.integer "descendant_id", null: false
@@ -188,6 +188,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_09_172224) do
     t.integer "modified_count", default: 0, null: false
     t.string "remote_image_url"
     t.datetime "scrapped_at"
+    t.string "short_id"
     t.string "title"
     t.datetime "updated_at", null: false
     t.string "url"
@@ -197,6 +198,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_09_172224) do
     t.boolean "webmentioned", default: false
     t.index ["fedipub_actor_id"], name: "index_posts_on_fedipub_actor_id"
     t.index ["group_id"], name: "index_posts_on_group_id"
+    t.index ["short_id"], name: "index_posts_on_short_id", unique: true
     t.index ["url_meta_id"], name: "index_posts_on_url_meta_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end

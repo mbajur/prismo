@@ -134,4 +134,16 @@ class Post < ApplicationRecord
   def create_group_announce
     announce!(actor: group.fedipub_actor)
   end
+
+  def assign_defaults
+    self.short_id ||= ShortId.new(self.class).generate
+  end
+
+  def to_param
+    short_id
+  end
+
+  def self.find_by_short_id!(short_id)
+    find_by!(short_id:)
+  end
 end

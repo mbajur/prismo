@@ -42,7 +42,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.find(params[:id]).decorate
+    @post = find_post
     set_meta_tags @post
 
     # We're doing that to avoid rendering the full post template for Mastodon
@@ -168,6 +168,6 @@ class PostsController < ApplicationController
   end
 
   def find_post
-    Post.find(params[:id])
+    Post.find_by_short_id!(params[:id]).decorate
   end
 end
