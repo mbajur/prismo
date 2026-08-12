@@ -65,19 +65,21 @@ class PostDecorator < Draper::Decorator
   end
 
   def to_meta_tags
-    alternate = []
-    alternate << {
-      href: object.federated_url, type: "application/activity+json"
-    } if object.local_fedipub_entity?
+    Rails.cache.fetch("#{object.cache_key_with_version}/meta_tags") do
+      alternate = []
+      alternate << {
+        href: object.federated_url, type: "application/activity+json"
+      } if object.local_fedipub_entity?
 
-    {
-      title: object.title,
-      description: excerpt,
-      alternate: alternate,
-      og: {
+      {
         title: object.title,
-        image: (object.thumb_url(:size_200) if object.thumb.present?)
+        description: excerpt,
+        alternate: alternate,
+        og: {
+          title: object.title,
+          image: (object.thumb_url(:size_200) if object.thumb.present?)
+        }
       }
-    }
+    end
   end
 end
