@@ -32,6 +32,7 @@ class Post < ApplicationRecord
   on_fedipub_delete_requested :discard
 
   after_create :create_group_announce, if: :local_fedipub_entity?
+  before_validation :assign_defaults, on: :create
 
   def self.find_by_short_id(short_id)
     find_by(short_id:)
