@@ -100,7 +100,7 @@ class CommentsController < ApplicationController
   end
 
   def find_post
-    Post.find(params[:post_id])
+    Post.find_by_short_id_or_id!(params[:post_id])
   end
 
   def comment_params
