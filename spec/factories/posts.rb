@@ -8,6 +8,7 @@ FactoryBot.define do
     tag_names { %w[foo bar] }
     # local { true }
     # uuid { SecureRandom.uuid }
+    short_id { SecureRandom.uuid }
 
     user
     group
