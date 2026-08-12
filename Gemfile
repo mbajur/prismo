@@ -128,3 +128,5 @@ gem "appsignal"
 gem "webmention"
 
 gem "mission_control-jobs"
+
+gem "data_migrate", "~> 11.3"
