@@ -40,6 +40,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_12_134702) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "data_migrations", primary_key: "version", id: :string, force: :cascade do |t|
+  end
+
   create_table "fedipub_activities", force: :cascade do |t|
     t.string "action", null: false
     t.integer "actor_id", null: false

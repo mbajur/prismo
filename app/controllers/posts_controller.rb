@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!, only: %i[new create edit update like unlike]
+  before_action :ensure_short_id_used, only: [ :show ]
 
   def index
     @page_title = "Hot stories"
@@ -168,6 +169,14 @@ class PostsController < ApplicationController
   end
 
   def find_post
-    Post.find_by_short_id!(params[:id]).decorate
+    Post.find_by_short_id_or_id!(params[:id]).decorate
+  end
+
+  # This is gonna be removed at some point. It's here only because
+  # we changed the URL format to use short IDs instead of IDs and we
+  # need to redirect old URLs to the new format for some time.
+  def ensure_short_id_used
+    @post = find_post
+    redirect_to post_path(@post) if params[:id] != @post.to_param
   end
 end
