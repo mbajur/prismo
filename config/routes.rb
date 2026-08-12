@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   default_url_options Rails.application.config.action_mailer.default_url_options
 
-
   devise_for :users, controllers: {
     registrations: "users/registrations"
   }
@@ -20,6 +19,9 @@ Rails.application.routes.draw do
 
   get :recent, to: "posts#recent", as: :recent_posts
 
+  # Legacy path redirect: posts used to live at /posts, now at /p
+  get "posts/*path", to: redirect("/p/%{path}")
+
   resource :user, path: "@:username" do
     post :follow, on: :member
     post :unfollow, on: :member
@@ -33,7 +35,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :posts do
+  resources :posts, path: :p do
     post :like, on: :member
     post :unlike, on: :member
     post :scrap_url, on: :collection
@@ -69,7 +71,6 @@ Rails.application.routes.draw do
     resource :profile, only: [ :show, :update, :destroy ]
     resource :preferences, only: [ :show, :update ]
   end
-
 
   namespace :admin do
     resource :settings, only: [ :edit, :update ]
