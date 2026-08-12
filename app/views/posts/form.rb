@@ -9,7 +9,7 @@ module Views
       end
 
       def view_template(&)
-        form_with model: @post, scope: :post, url: url, method: method, data: { controller: "post-form" } do |f|
+        form_with model: @post, scope: :post, url: url, method: method, data: { controller: "post-form", post_form_scrap_url_value: scrap_url_posts_path } do |f|
           div(class: "flex flex-col gap-4 lg:gap-6 mb-6") do
             Alert(variant: :destructive) do
               AlertTitle { "Oopsie daisy!" }
