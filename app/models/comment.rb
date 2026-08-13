@@ -50,6 +50,30 @@ class Comment < ApplicationRecord
     attrs
   end
 
+  def self.handle_incoming_fediverse_data_async(activity_hash_or_id)
+    Fedipub::IncomingActivityHandlerJob.perform_later(
+      entity_class: self.name,
+      activity_hash_or_id: activity_hash_or_id
+    )
+  end
+
+  # @todo extract that to a service
+  def self.handle_incoming_fediverse_data(activity_hash_or_id)
+    activity = Fediverse::Request.dereference(activity_hash_or_id)
+    object = Fediverse::Request.dereference(activity["object"])
+
+    entity = Fedipub::Utils::Object.find_or_create!(object)
+
+    if activity["type"] == "Update"
+      entity.assign_attributes from_activitypub_object(object)
+
+      # Use timestamps from attributes
+      entity.save! touch: false
+    end
+
+    entity
+  end
+
   def to_activitypub_object
     parent_or_post = parent || post
 

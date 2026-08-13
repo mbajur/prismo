@@ -2,14 +2,7 @@
 
 require 'rails_helper'
 
-describe Post, type: :model do
-  subject { build(:post, user: user) }
-  let(:user) { create(:user) }
-
-  it { is_expected.to have_many(:comments) }
-  it { is_expected.to belong_to(:url_meta).optional }
-  it { is_expected.to belong_to(:group) }
-
+describe Comment, type: :model do
   describe ".handle_incoming_fediverse_data" do
     subject(:handle) { described_class.handle_incoming_fediverse_data(activity_hash_or_id) }
 
@@ -20,9 +13,9 @@ describe Post, type: :model do
         "object" => object_hash
       }
     end
-    let(:object_hash) { { "id" => "https://remote.example/objects/1", "type" => "Page" } }
+    let(:object_hash) { { "id" => "https://remote.example/objects/1", "type" => "Note" } }
     let(:activity_type) { "Create" }
-    let(:entity) { create(:post, :link) }
+    let(:entity) { create(:comment) }
 
     before do
       allow(Fediverse::Request).to receive(:dereference).with(activity_hash_or_id).and_return(activity_hash_or_id)
@@ -63,7 +56,7 @@ describe Post, type: :model do
 
     context "when the activity type is Update" do
       let(:activity_type) { "Update" }
-      let(:transformed_attributes) { { title: "Updated title" } }
+      let(:transformed_attributes) { { body: "Updated body" } }
 
       before do
         allow(described_class).to receive(:from_activitypub_object).with(object_hash).and_return(transformed_attributes)
@@ -72,7 +65,7 @@ describe Post, type: :model do
       it "assigns the attributes transformed from the object onto the entity" do
         handle
 
-        expect(entity.title).to eq("Updated title")
+        expect(entity.body).to eq("Updated body")
       end
 
       it "persists the entity without touching timestamps" do

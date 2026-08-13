@@ -27,7 +27,8 @@ class Post < ApplicationRecord
                        soft_delete_date_method: :discarded_at,
                        actor_entity_method: :user,
                        route_path_segment: :posts,
-                       url_param: :short_id
+                       url_param: :short_id,
+                       with: :handle_incoming_fediverse_data_async
 
   on_fedipub_delete_requested :discard
 
@@ -123,6 +124,29 @@ class Post < ApplicationRecord
                                                      ]
                                                    }
     end
+  end
+
+  def self.handle_incoming_fediverse_data_async(activity_hash_or_id)
+    Fedipub::IncomingActivityHandlerJob.perform_later(
+      entity_class: self.name,
+      activity_hash_or_id: activity_hash_or_id
+    )
+  end
+
+  def self.handle_incoming_fediverse_data(activity_hash_or_id)
+    activity = Fediverse::Request.dereference(activity_hash_or_id)
+    object = Fediverse::Request.dereference(activity["object"])
+
+    entity = Fedipub::Utils::Object.find_or_create!(object)
+
+    if activity["type"] == "Update"
+      entity.assign_attributes from_activitypub_object(object)
+
+      # Use timestamps from attributes
+      entity.save! touch: false
+    end
+
+    entity
   end
 
   def article?
