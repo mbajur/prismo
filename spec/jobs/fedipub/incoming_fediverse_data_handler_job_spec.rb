@@ -5,8 +5,9 @@ require 'rails_helper'
 describe Fedipub::IncomingFediverseDataHandlerJob do
   subject(:perform) { described_class.perform_now(incoming_activity) }
 
-  let(:incoming_activity) { create(:fedipub_incoming_activity, entity_class: "Post", data: activity_id) }
+  let(:incoming_activity) { create(:fedipub_incoming_activity, entity_class: "Post", data: data) }
   let(:activity_id) { "https://example.com/activities/1" }
+  let(:data) { { "id" => activity_id } }
 
   before do
     allow(Post).to receive(:handle_incoming_fediverse_data)
@@ -21,6 +22,16 @@ describe Fedipub::IncomingFediverseDataHandlerJob do
     perform
 
     expect(Post).to have_received(:handle_incoming_fediverse_data).with(activity_id)
+  end
+
+  context "when the stored data is a full activity hash" do
+    let(:data) { { "id" => activity_id, "type" => "Create" } }
+
+    it "delegates handling with the hash as-is" do
+      perform
+
+      expect(Post).to have_received(:handle_incoming_fediverse_data).with(data)
+    end
   end
 
   it "marks the incoming activity as processed" do
