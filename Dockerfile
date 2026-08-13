@@ -52,6 +52,10 @@ COPY . .
 RUN bundle exec bootsnap precompile -j 1 app/ lib/
 
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
+# Split into separate layers (rather than relying on the tailwindcss-rails Rake
+# task enhance() hook) since a single combined run has been seen to produce a
+# manifest missing the Tailwind entry despite the CSS file being written.
+RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails tailwindcss:build
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
 
