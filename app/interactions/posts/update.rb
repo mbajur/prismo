@@ -34,7 +34,7 @@ module Posts
 
     def after_post_save_hook(post)
       post.cache_description
-      # Stories::ScrapJob.perform_later(post.id) if post.url_changed?
+      Stories::ScrapJob.perform_later(post.id) if post.url_changed?
       # Stories::BroadcastChanges.run!(story: post)
       # ActivityPub::UpdateDistributionJob.call_later(post) if post.local?
     end

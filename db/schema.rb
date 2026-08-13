@@ -121,17 +121,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_12_151631) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "fedipub_mentions", force: :cascade do |t|
-    t.integer "actor_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "discarded_at"
-    t.integer "entity_id", null: false
-    t.string "entity_type", null: false
-    t.datetime "updated_at", null: false
-    t.index ["actor_id"], name: "index_fedipub_mentions_on_actor_id"
-    t.index ["entity_type", "entity_id"], name: "index_fedipub_mentions_on_entity"
-  end
-
   create_table "flags", force: :cascade do |t|
     t.boolean "action_taken", default: false
     t.integer "actor_id", null: false
@@ -284,7 +273,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_12_151631) do
   add_foreign_key "fedipub_activities", "fedipub_actors", column: "actor_id"
   add_foreign_key "fedipub_followings", "fedipub_actors", column: "actor_id"
   add_foreign_key "fedipub_followings", "fedipub_actors", column: "target_actor_id"
-  add_foreign_key "fedipub_mentions", "fedipub_actors", column: "actor_id"
   add_foreign_key "likes", "fedipub_actors"
   add_foreign_key "posts", "fedipub_actors"
   add_foreign_key "posts", "groups"
