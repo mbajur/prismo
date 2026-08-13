@@ -46,13 +46,13 @@ describe Fedipub::IncomingFediverseDataHandlerJob do
     end
 
     it "marks the incoming activity as failed" do
-      perform
+      expect { perform }.to raise_error(StandardError)
 
       expect(incoming_activity.reload).to be_failed
     end
 
-    it "does not raise" do
-      expect { perform }.not_to raise_error
+    it "re-raises the error" do
+      expect { perform }.to raise_error(StandardError)
     end
   end
 end

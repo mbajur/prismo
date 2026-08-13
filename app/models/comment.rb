@@ -54,7 +54,7 @@ class Comment < ApplicationRecord
   def self.handle_incoming_fediverse_data_async(activity_hash_or_id)
     incoming_activity = Fedipub::IncomingActivity.create!(
       entity_class: self.name,
-      data: activity_hash_or_id
+      data: activity_hash_or_id.is_a?(Hash) ? activity_hash_or_id : { "id" => activity_hash_or_id }
     )
     Fedipub::IncomingFediverseDataHandlerJob.perform_later(incoming_activity)
   end
