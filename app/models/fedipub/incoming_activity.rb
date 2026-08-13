@@ -1,6 +1,4 @@
 class Fedipub::IncomingActivity < ApplicationRecord
-  attribute :data, :json
-
   enum :status, {
     pending: "pending",
     processing: "processing",
