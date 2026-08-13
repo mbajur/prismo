@@ -40,3 +40,5 @@
 coverage
 
 app/assets/builds
+
+config/deploy.yml
