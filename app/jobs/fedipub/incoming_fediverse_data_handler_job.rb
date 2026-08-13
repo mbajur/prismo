@@ -5,8 +5,9 @@ module Fedipub
       entity_class = incoming_activity.entity_class.constantize
       entity_class.handle_incoming_fediverse_data(activity_hash_or_id(incoming_activity.data))
       incoming_activity.processed!
-    rescue StandardError => _e
+    rescue StandardError => e
       incoming_activity.failed!
+      raise e
     end
 
     private
