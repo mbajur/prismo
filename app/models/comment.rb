@@ -21,7 +21,8 @@ class Comment < ApplicationRecord
                        soft_deleted_method: :discarded?,
                        soft_delete_date_method: :discarded_at,
                        actor_entity_method: :user,
-                       route_path_segment: :comments
+                       route_path_segment: :comments,
+                       with: :handle_incoming_fediverse_data_async
 
   on_fedipub_delete_requested :discard
 
