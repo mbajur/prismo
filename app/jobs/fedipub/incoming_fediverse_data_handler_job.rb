@@ -1,5 +1,5 @@
 module Fedipub
-  class IncomingFediverseDataHandler < ApplicationJob
+  class IncomingFediverseDataHandlerJob < ApplicationJob
     def perform(incoming_activity)
       incoming_activity.processing!
       entity_class = incoming_activity.entity_class.constantize

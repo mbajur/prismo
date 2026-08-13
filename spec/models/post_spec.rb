@@ -24,7 +24,7 @@ describe Post, type: :model do
     end
 
     it "enqueues the incoming fediverse data handler job with the incoming activity" do
-      expect(Fedipub::IncomingFediverseDataHandler).to receive(:perform_later) do |incoming_activity|
+      expect(Fedipub::IncomingFediverseDataHandlerJob).to receive(:perform_later) do |incoming_activity|
         expect(incoming_activity).to eq(Fedipub::IncomingActivity.last)
       end
 

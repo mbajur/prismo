@@ -56,7 +56,7 @@ class Comment < ApplicationRecord
       entity_class: self.name,
       data: activity_hash_or_id
     )
-    Fedipub::IncomingFediverseDataHandler.perform_later(incoming_activity)
+    Fedipub::IncomingFediverseDataHandlerJob.perform_later(incoming_activity)
   end
 
   # @todo extract that to a service

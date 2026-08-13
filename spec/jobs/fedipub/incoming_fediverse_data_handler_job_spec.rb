@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Fedipub::IncomingFediverseDataHandler do
+describe Fedipub::IncomingFediverseDataHandlerJob do
   subject(:perform) { described_class.perform_now(incoming_activity) }
 
   let(:incoming_activity) { create(:fedipub_incoming_activity, entity_class: "Post", data: activity_id) }
