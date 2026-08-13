@@ -127,12 +127,14 @@ class Post < ApplicationRecord
   end
 
   def self.handle_incoming_fediverse_data_async(activity_hash_or_id)
-    Fedipub::IncomingActivityHandlerJob.perform_later(
+    incoming_activity = Fedipub::IncomingActivity.create!(
       entity_class: self.name,
-      activity_hash_or_id: activity_hash_or_id
+      data: activity_hash_or_id
     )
+    Fedipub::IncomingFediverseDataHandler.perform_later(incoming_activity)
   end
 
+  # @todo extract that to a service
   def self.handle_incoming_fediverse_data(activity_hash_or_id)
     activity = Fediverse::Request.dereference(activity_hash_or_id)
     object = Fediverse::Request.dereference(activity["object"])
