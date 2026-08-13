@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_12_151631) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_13_104825) do
   create_table "comment_hierarchies", id: false, force: :cascade do |t|
     t.integer "ancestor_id", null: false
     t.integer "descendant_id", null: false
@@ -115,7 +115,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_12_151631) do
 
   create_table "fedipub_incoming_activities", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.text "data", null: false
+    t.json "data"
     t.string "entity_class", null: false
     t.string "status", null: false
     t.datetime "updated_at", null: false
