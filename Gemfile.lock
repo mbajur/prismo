@@ -372,7 +372,7 @@ GEM
       ruby-ll (~> 2.2)
     orm_adapter (0.5.0)
     ostruct (0.6.3)
-    pagy (43.6.0)
+    pagy (43.6.1)
       json
       uri
       yaml
