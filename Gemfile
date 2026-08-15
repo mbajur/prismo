@@ -78,7 +78,7 @@ gem "devise", "~> 5.0"
 
 gem "pagy", "~> 43.6"
 
-gem "ruby_ui", "~> 1.4", group: :development, require: false
+gem "ruby_ui", "~> 1.6", group: :development, require: false
 
 gem "phlex-rails", "~> 2.4"
 
