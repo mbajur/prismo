@@ -525,7 +525,7 @@ GEM
       ffi (~> 1.12)
       logger
     ruby2_keywords (0.0.5)
-    ruby_ui (1.4.0)
+    ruby_ui (1.6.0)
     search_cop (1.5.0)
       treetop
     securerandom (0.4.1)
@@ -688,7 +688,7 @@ DEPENDENCIES
   rinku (~> 2.0)
   rspec-rails (~> 8.0.0)
   rubocop-rails-omakase
-  ruby_ui (~> 1.4)
+  ruby_ui (~> 1.6)
   search_cop (~> 1.5)
   shoulda-matchers
   shrine (~> 3.6)
