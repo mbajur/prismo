@@ -25,16 +25,19 @@ module Comments
     private
 
     def handle_mentions(entity, object)
-      source = object["content"]
-      source_plain = Nokogiri::HTML(source).text
-      mentions = source_plain.scan(/@\w+(?:@\w+)?(?:\.\w+)*/)
+      tag = object["tag"] || []
+      tags = tag.is_a?(Hash) ? [ tag ] : tag
+      mentions = tags.filter { |tag| tag["type"] == "Mention" }
 
+      # Remove mentions that are no longer present in the activity
+      mentions_hrefs = mentions.map { |tag| tag["href"] }
       entity.fedipub_mentions.find_each do |existing_mention|
-        existing_mention.destroy! if !mentions.include?(existing_mention.actor.at_address) # @todo should we handle short_at_address?
+        existing_mention.destroy! if !mentions_hrefs.include?(existing_mention.actor.federated_url)
       end
 
+      # Add new mentions that are not already present
       mentions.each do |mention|
-        actor = Fedipub::Actor.find_or_create_by_account(mention)
+        actor = Fedipub::Actor.find_or_create_by_federation_url(mention["href"])
         Fedipub::Mention.find_or_create_by!(actor: actor, entity: entity)
       rescue StandardError => e
         Rails.logger.error "Failed to handle mention: #{e.message}"
