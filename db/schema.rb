@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_13_104825) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_15_082321) do
   create_table "comment_hierarchies", id: false, force: :cascade do |t|
     t.integer "ancestor_id", null: false
     t.integer "descendant_id", null: false
@@ -119,6 +119,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_13_104825) do
     t.string "entity_class", null: false
     t.string "status", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "fedipub_mentions", force: :cascade do |t|
+    t.integer "actor_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "discarded_at"
+    t.integer "entity_id", null: false
+    t.string "entity_type", null: false
+    t.datetime "updated_at", null: false
+    t.index ["actor_id"], name: "index_fedipub_mentions_on_actor_id"
+    t.index ["entity_id", "entity_type", "actor_id"], name: "idx_on_entity_id_entity_type_actor_id_eb98237f76", unique: true
+    t.index ["entity_type", "entity_id"], name: "index_fedipub_mentions_on_entity"
   end
 
   create_table "flags", force: :cascade do |t|
@@ -273,6 +285,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_13_104825) do
   add_foreign_key "fedipub_activities", "fedipub_actors", column: "actor_id"
   add_foreign_key "fedipub_followings", "fedipub_actors", column: "actor_id"
   add_foreign_key "fedipub_followings", "fedipub_actors", column: "target_actor_id"
+  add_foreign_key "fedipub_mentions", "fedipub_actors", column: "actor_id"
   add_foreign_key "likes", "fedipub_actors"
   add_foreign_key "posts", "fedipub_actors"
   add_foreign_key "posts", "groups"

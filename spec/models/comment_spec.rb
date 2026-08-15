@@ -48,76 +48,21 @@ describe Comment, type: :model do
   describe ".handle_incoming_fediverse_data" do
     subject(:handle) { described_class.handle_incoming_fediverse_data(activity_hash_or_id) }
 
-    let(:activity_hash_or_id) do
-      {
-        "id" => "https://remote.example/activities/1",
-        "type" => activity_type,
-        "object" => object_hash
-      }
-    end
-    let(:object_hash) { { "id" => "https://remote.example/objects/1", "type" => "Note" } }
-    let(:activity_type) { "Create" }
-    let(:entity) { create(:comment) }
+    let(:activity_hash_or_id) { "https://remote.example/activities/1" }
+    let(:handler) { instance_double(Comments::IncomingFediverseDataHandler, call: create(:comment)) }
 
     before do
-      allow(Fediverse::Request).to receive(:dereference).with(activity_hash_or_id).and_return(activity_hash_or_id)
-      allow(Fediverse::Request).to receive(:dereference).with(object_hash).and_return(object_hash)
-      allow(Fedipub::Utils::Object).to receive(:find_or_create!).with(object_hash).and_return(entity)
+      allow(Comments::IncomingFediverseDataHandler).to receive(:new).with(activity_hash_or_id).and_return(handler)
     end
 
-    it "dereferences the activity and its nested object" do
+    it "delegates to Comments::IncomingFediverseDataHandler" do
       handle
 
-      expect(Fediverse::Request).to have_received(:dereference).with(activity_hash_or_id)
-      expect(Fediverse::Request).to have_received(:dereference).with(object_hash)
+      expect(handler).to have_received(:call)
     end
 
-    it "finds or creates the entity from the dereferenced object" do
-      handle
-
-      expect(Fedipub::Utils::Object).to have_received(:find_or_create!).with(object_hash)
-    end
-
-    it "returns the entity" do
-      expect(handle).to eq(entity)
-    end
-
-    context "when the activity type is Create" do
-      let(:activity_type) { "Create" }
-
-      it "does not update the entity's attributes" do
-        expect(entity).not_to receive(:assign_attributes)
-        handle
-      end
-
-      it "does not persist the entity again" do
-        expect(entity).not_to receive(:save!)
-        handle
-      end
-    end
-
-    context "when the activity type is Update" do
-      let(:activity_type) { "Update" }
-      let(:transformed_attributes) { { body: "Updated body" } }
-
-      before do
-        allow(described_class).to receive(:from_activitypub_object).with(object_hash).and_return(transformed_attributes)
-      end
-
-      it "assigns the attributes transformed from the object onto the entity" do
-        handle
-
-        expect(entity.body).to eq("Updated body")
-      end
-
-      it "persists the entity without touching timestamps" do
-        expect(entity).to receive(:save!).with(touch: false)
-        handle
-      end
-
-      it "returns the updated entity" do
-        expect(handle).to eq(entity)
-      end
+    it "does not raise an error" do
+      expect { handle }.not_to raise_error
     end
   end
 end

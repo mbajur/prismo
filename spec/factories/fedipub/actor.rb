@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :actor, class: "Fedipub::Actor" do
+  factory :fedipub_actor, class: "Fedipub::Actor" do
     name { Faker::Name.unique.name }
     actor_type { "Person" }
     entity { nil }

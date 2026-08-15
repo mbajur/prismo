@@ -71,6 +71,7 @@ group :test do
   gem "simplecov", require: false
   gem "faker"
   gem "shoulda-matchers"
+  gem "webmock"
 end
 
 gem "devise", "~> 5.0"
