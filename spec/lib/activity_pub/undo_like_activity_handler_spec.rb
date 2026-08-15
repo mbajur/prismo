@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe ActivityPub::UndoLikeActivityHandler do
   describe '.handle_undo_like_request' do
-    let!(:actor) { create(:actor, :distant) }
+    let!(:actor) { create(:fedipub_actor, :distant) }
     let!(:entity) { create(:post) }
 
     around do |example|

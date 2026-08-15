@@ -3,6 +3,6 @@
 FactoryBot.define do
   factory :like do
     likeable factory: :post
-    fedipub_actor factory: :actor
+    fedipub_actor
   end
 end

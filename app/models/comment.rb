@@ -10,6 +10,8 @@ class Comment < ApplicationRecord
   belongs_to :post, counter_cache: true
   belongs_to :user, optional: true
   belongs_to :parent, class_name: "Comment", optional: true
+  has_many :fedipub_mentions, as: :entity, class_name: "Fedipub::Mention"
+  has_many :mentioned_fedipub_actors, through: :fedipub_mentions, source: :actor, class_name: "Fedipub::Actor"
 
   validates :body, presence: true
 
@@ -59,21 +61,8 @@ class Comment < ApplicationRecord
     Fedipub::IncomingFediverseDataHandlerJob.perform_later(incoming_activity)
   end
 
-  # @todo extract that to a service
   def self.handle_incoming_fediverse_data(activity_hash_or_id)
-    activity = Fediverse::Request.dereference(activity_hash_or_id)
-    object = Fediverse::Request.dereference(activity["object"])
-
-    entity = Fedipub::Utils::Object.find_or_create!(object)
-
-    if activity["type"] == "Update"
-      entity.assign_attributes from_activitypub_object(object)
-
-      # Use timestamps from attributes
-      entity.save! touch: false
-    end
-
-    entity
+    Comments::IncomingFediverseDataHandler.new(activity_hash_or_id).call
   end
 
   def to_activitypub_object

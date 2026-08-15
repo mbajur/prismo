@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe ActivityPub::LikeActivityHandler do
   describe '.handle_like_activity' do
-    let(:actor) { create(:actor, :distant) }
+    let(:actor) { create(:fedipub_actor, :distant) }
     let(:entity) { create(:post) }
 
     around do |example|
