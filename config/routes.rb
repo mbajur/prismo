@@ -92,3 +92,13 @@ Rails.application.routes.draw do
   # root "posts#index"
   root to: "posts#index"
 end
+
+Fedipub::Engine.routes.draw do
+  scope Fedipub.configuration.server_routes_path, module: :server, as: :server, defaults: { format: :activitypub } do
+    resources :actors, only: [] do
+      member do
+        get :moderators
+      end
+    end
+  end
+end

@@ -34,6 +34,8 @@ class User < ApplicationRecord
                         name_field: :display_name,
                         profile_url_method: :user_url
 
+  scope :admins, -> { where(admin: true) }
+
   def to_activitypub_object
     data = { summary: decorate.bio_html }
 
