@@ -80,7 +80,16 @@ describe Comments::IncomingFediverseDataHandler do
   context "when object contains tags" do
     let(:object_hash) do
       {
-        "content" => "<p><span class=\"h-card\" translate=\"no\"><a href=\"http://example.com/@foo\" class=\"u-url mention\">@<span>foo@example.com</span></a></span> test <span class=\"h-card\" translate=\"no\"><a href=\"http://example.com/@bar\" class=\"u-url mention\">@<span>bar@example.com</span></a></span></p>"
+        "tag" => [
+          {
+            "type" => "Mention",
+            "href" => "https://example.com/federation/actors/foo"
+          },
+          {
+            "type" => "Mention",
+            "href" => "https://example.com/federation/actors/bar"
+          }
+        ]
       }
     end
 
