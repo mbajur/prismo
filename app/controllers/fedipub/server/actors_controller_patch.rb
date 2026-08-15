@@ -16,5 +16,3 @@ module Fedipub
     end
   end
 end
-
-Fedipub::Server::ActorsController.prepend(Fedipub::Server::ActorsControllerPatch)

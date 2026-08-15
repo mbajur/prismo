@@ -7,5 +7,3 @@ module Fedipub
     end
   end
 end
-
-Fedipub::Server::ActorPolicy.prepend(Fedipub::Server::ActorPolicyPatch)
