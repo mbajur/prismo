@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/LineLength
+# rubocop:disable Layout/LineLength
 
 require 'rails_helper'
 
@@ -99,4 +99,4 @@ describe BodyParser do
   end
 end
 
-# rubocop:enable Metrics/LineLength
+# rubocop:enable Layout/LineLength
