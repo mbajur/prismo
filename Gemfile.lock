@@ -534,7 +534,7 @@ GEM
     shrine (3.9.0)
       content_disposition (~> 1.0)
       down (~> 5.1)
-    simplecov (1.1.0)
+    simplecov (1.1.1)
     simplecov-cobertura (4.0.0)
       rexml
       simplecov (~> 1.0)
