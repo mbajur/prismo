@@ -108,7 +108,7 @@ gem "validate_url", "~> 1.0"
 
 gem "pundit", "~> 2.5"
 
-gem "marksmith", "~> 0.5.2"
+gem "marksmith", "~> 0.6.0"
 
 gem "commonmarker", "~> 2.9"
 
