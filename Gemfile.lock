@@ -103,7 +103,7 @@ GEM
     addressable (2.9.0)
       public_suffix (>= 2.0.2, < 8.0)
     ansi (1.6.0)
-    appsignal (4.9.1)
+    appsignal (4.10.0)
       logger
       rack (>= 2.0.0)
     ast (2.4.3)
