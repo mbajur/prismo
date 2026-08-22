@@ -308,7 +308,7 @@ GEM
       net-pop
       net-smtp
     marcel (1.2.1)
-    marksmith (0.5.2)
+    marksmith (0.6.0)
       activesupport
     meta-tags (2.23.0)
       actionpack (>= 6.0.0)
@@ -674,7 +674,7 @@ DEPENDENCIES
   jbuilder
   kamal
   link_thumbnailer (~> 3.4)
-  marksmith (~> 0.5.2)
+  marksmith (~> 0.6.0)
   meta-tags (~> 2.23)
   mission_control-jobs
   pagy (~> 43.6)
