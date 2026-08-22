@@ -88,7 +88,7 @@ gem "tailwindcss-rails", "~> 4.4"
 
 gem "gutentag", "~> 3.0"
 
-gem "closure_tree", "~> 9.7"
+gem "closure_tree", "~> 9.8"
 
 gem "active_link_to", "~> 1.0"
 
