@@ -538,7 +538,7 @@ GEM
     simplecov-cobertura (4.0.0)
       rexml
       simplecov (~> 1.0)
-    sin_lru_redux (2.5.2)
+    sin_lru_redux (2.5.3)
     solid_cable (4.0.2)
       actioncable (>= 7.2)
       activejob (>= 7.2)
@@ -573,7 +573,7 @@ GEM
       railties (>= 6.0.0)
     store_model (4.6.1)
       activerecord (>= 7.0)
-    tailwind_merge (1.5.2)
+    tailwind_merge (1.5.4)
       sin_lru_redux (~> 2.5)
     tailwindcss-rails (4.6.0)
       railties (>= 7.0.0)
