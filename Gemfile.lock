@@ -225,9 +225,7 @@ GEM
       addressable (~> 2.0)
       image_size (~> 2.0)
       typhoeus (~> 1.0)
-    image_processing (1.14.0)
-      mini_magick (>= 4.9.5, < 6)
-      ruby-vips (>= 2.0.17, < 3)
+    image_processing (2.0.3)
     image_size (2.1.2)
     importmap-rails (2.2.3)
       actionpack (>= 6.0.0)
@@ -312,8 +310,6 @@ GEM
       activesupport
     meta-tags (2.23.0)
       actionpack (>= 6.0.0)
-    mini_magick (5.3.2)
-      logger
     mini_mime (1.1.5)
     minitest (6.0.6)
       drb (~> 2.0)
@@ -521,9 +517,6 @@ GEM
       ansi
       ast
     ruby-progressbar (1.13.0)
-    ruby-vips (2.3.0)
-      ffi (~> 1.12)
-      logger
     ruby2_keywords (0.0.5)
     ruby_ui (1.6.0)
     search_cop (1.5.0)
@@ -669,7 +662,7 @@ DEPENDENCIES
   fedipub!
   gutentag (~> 3.0)
   httplog
-  image_processing (~> 1.2)
+  image_processing (~> 2.0)
   importmap-rails
   jbuilder
   kamal
